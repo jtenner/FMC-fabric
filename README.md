@@ -2,6 +2,6 @@
 
 Vanilla enhancements fabric mod
 
-Features:
+### Features:
 - crosshair solid color
 - coordinates, facing and pitch on HUD
