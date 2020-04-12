@@ -33,11 +33,13 @@ public class InGameHudMixin extends DrawableHelper
 		// up or down
 		if(FMC.MC.currentScreen instanceof ChatScreen) {
 			FMC.INSTANCE.getOnScreenText().drawCoordinatesTextUpper();
-			FMC.INSTANCE.getOnScreenText().drawYPRTextUpper();
+			FMC.INSTANCE.getOnScreenText().drawLightLevelTextUpper();
+			FMC.INSTANCE.getOnScreenText().drawPFTextUpper();
 		}
 		else {
 			FMC.INSTANCE.getOnScreenText().drawCoordinatesTextLower();
-			FMC.INSTANCE.getOnScreenText().drawYPRTextLower();
+			FMC.INSTANCE.getOnScreenText().drawLightLevelTextLower();
+			FMC.INSTANCE.getOnScreenText().drawPFTextLower();
 		}
 	}
 
@@ -65,7 +67,6 @@ public class InGameHudMixin extends DrawableHelper
             RenderSystem.popMatrix();
         }
         else {
-			// two lines of crosshair
 			RenderSystem.blendColor(FMC.crosshairColor[0], FMC.crosshairColor[1], FMC.crosshairColor[2], FMC.crosshairColor[3]);
             RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.CONSTANT_COLOR, GlStateManager.DstFactor.ZERO, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
 			this.blit((scaledWidth - 15) / 2, (scaledHeight - 15) / 2, 0, 0, 15, 15);
