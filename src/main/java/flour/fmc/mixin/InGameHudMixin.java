@@ -25,12 +25,12 @@ public class InGameHudMixin extends DrawableHelper
 	@Inject(method = {"renderStatusEffectOverlay"}, at = @At("RETURN"))
 	private void onRenderStatusEffectOverlay(CallbackInfo info)
 	{
-		// renders on screen text only if not in debug or hud is hidden or chat is visible
+		// renders on screen text only if not in debug or hud is hidden
 		if(FMC.MC.options.debugEnabled || FMC.MC.options.hudHidden) {
 			return;	
 		}
 
-		// up or down
+		// HUD info moves to the top if chat is open
 		if(FMC.MC.currentScreen instanceof ChatScreen) {
 			FMC.INSTANCE.getOnScreenText().drawCoordinatesTextUpper();
 			FMC.INSTANCE.getOnScreenText().drawLightLevelTextUpper();
@@ -46,6 +46,7 @@ public class InGameHudMixin extends DrawableHelper
 	@Overwrite
 	private void renderCrosshair()
 	{
+		// completely overwrite rendering the crosshair
 		final GameOptions gameOptions = FMC.MC.options;
 
         if(gameOptions.perspective != 0) {
