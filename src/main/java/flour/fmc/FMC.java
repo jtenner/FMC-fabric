@@ -9,8 +9,10 @@ public class FMC implements ModInitializer
 	public static FMC INSTANCE;
 	public static MinecraftClient MC;
 
+	// all ones for using exactly what is in resource pack
 	// 									  R  G  B  A
-	public static int[] crosshairColor = {0, 1, 0, 1};
+	public static int[] crosshairColor = {1, 1, 1, 1};
+	public static double crosshairScale = 0.9d;
 
 	private OnScreenText oscText;
 

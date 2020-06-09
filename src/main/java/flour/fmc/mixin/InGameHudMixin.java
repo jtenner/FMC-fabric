@@ -52,10 +52,10 @@ public class InGameHudMixin extends DrawableHelper
         if(gameOptions.perspective != 0) {
 			return;
 		}
-		
+
 		int scaledWidth = FMC.MC.getWindow().getScaledWidth();
 		int scaledHeight = FMC.MC.getWindow().getScaledHeight();
-		
+
 		// crosshair in debug screen
         if(gameOptions.debugEnabled && !gameOptions.hudHidden && !FMC.MC.player.getReducedDebugInfo() && !gameOptions.reducedDebugInfo) {
             RenderSystem.pushMatrix();
@@ -68,11 +68,18 @@ public class InGameHudMixin extends DrawableHelper
             RenderSystem.popMatrix();
         }
         else {
+			// renders the crosshair itself
+			RenderSystem.pushMatrix();
+			RenderSystem.translatef((float)(scaledWidth / 2), (float)(scaledHeight / 2), (float)this.getBlitOffset());
+			RenderSystem.enableBlend();
 			RenderSystem.blendColor(FMC.crosshairColor[0], FMC.crosshairColor[1], FMC.crosshairColor[2], FMC.crosshairColor[3]);
-            RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.CONSTANT_COLOR, GlStateManager.DstFactor.ZERO, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-			this.blit((scaledWidth - 15) / 2, (scaledHeight - 15) / 2, 0, 0, 15, 15);
+			RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.CONSTANT_COLOR, GlStateManager.DstFactor.ZERO, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+			RenderSystem.scaled(FMC.crosshairScale, FMC.crosshairScale, 1.0d);
+			this.blit((int)(-15 / 2), (int)(-15 / 2), 0, 0, 15, 15);
+			RenderSystem.disableBlend();
+			RenderSystem.popMatrix();
 			
-			// renders the attack indicator set to crosshair (also colored)
+			// renders the attack indicator if set to crosshair
             if(FMC.MC.options.attackIndicator == AttackIndicator.CROSSHAIR) {
                 final float f = FMC.MC.player.getAttackCooldownProgress(0.0f);
 				boolean bl = false;
@@ -81,18 +88,18 @@ public class InGameHudMixin extends DrawableHelper
                     bl = (FMC.MC.player.getAttackCooldownProgressPerTick() > 5.0f);
                     bl &= FMC.MC.targetedEntity.isAlive();
                 }
-                final int j = scaledHeight / 2 - 7 + 16;
+                final int s = scaledHeight / 2 - 7 + 16;
 				final int k = scaledWidth / 2 - 8;
 				
                 if(bl) {
-                    this.blit(k, j, 68, 94, 16, 16);
+                    this.blit(k, s, 68, 94, 16, 16);
                 }
                 else if(f < 1.0f) {
                     final int l = (int)(f * 17.0f);
-                    this.blit(k, j, 36, 94, 16, 4);
-                    this.blit(k, j, 52, 94, l, 4);
+                    this.blit(k, s, 36, 94, 16, 4);
+                    this.blit(k, s, 52, 94, l, 4);
                 }
-            }
+			}
 		}
 	}
 }
