@@ -6,3 +6,4 @@ Vanilla enhancements fabric mod
 - crosshair solid color
 - coordinates, facing, block light and pitch on HUD
 - disable double-tap W to sprint featurette
+- death coordinates in chat (only visible to you)
