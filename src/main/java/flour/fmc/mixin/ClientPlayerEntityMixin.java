@@ -21,6 +21,7 @@ public class ClientPlayerEntityMixin
 	@Inject(method = "tickMovement", at = @At("HEAD"))
 	private void onTickMovement(CallbackInfo info)
 	{
+		// Disables the 'Double-tap W to sprint' bs
 		this.field_3935 = -1;
 	}
 
@@ -28,7 +29,7 @@ public class ClientPlayerEntityMixin
 	private void afterDeath(CallbackInfo info) {
 		if(FMC.INSTANCE.isAfterDeath) {
 			FMC.INSTANCE.isAfterDeath = false;
-			FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText("You died at " + String.format("X: %.01f Z: %.01f, Y: %.01f in %s!", FMC.INSTANCE.getLastDeathX(), FMC.INSTANCE.getLastDeathZ(), FMC.INSTANCE.getLastDeathY(), FMC.INSTANCE.getLastDeathWorld())));
+			FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText(String.format("You died at X: %.01f Z: %.01f, Y: %.01f in %s!", FMC.INSTANCE.getLastDeathX(), FMC.INSTANCE.getLastDeathZ(), FMC.INSTANCE.getLastDeathY(), FMC.INSTANCE.getLastDeathWorld())));
 		}
 	}
 }

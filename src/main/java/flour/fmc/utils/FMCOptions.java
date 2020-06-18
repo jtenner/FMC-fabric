@@ -22,7 +22,7 @@ public class FMCOptions
 			FMC.OPTIONS.buttonPosition = ButtonPosition.getOption(FMC.OPTIONS.buttonPosition.getId() + integer);
 		},
 		(gameOptions, cyclingOption) -> {
-			return "Button position: " + FMC.OPTIONS.buttonPosition;
+			return "FMC Button Position: " + FMC.OPTIONS.buttonPosition;
 		}
 	);
 
