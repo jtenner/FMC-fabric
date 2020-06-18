@@ -1,16 +1,17 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "flour.fmc.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
-  "client": [
-	"InGameHudMixin",
-	"ClientPlayerEntityMixin",
-	"ClientPlayNetworkHandlerMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+	"required": true,
+	"minVersion": "0.8",
+	"package": "flour.fmc.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+	],
+	"client": [
+		"InGameHudMixin",
+		"ClientPlayerEntityMixin",
+		"ClientPlayNetworkHandlerMixin",
+		"SettingsScreenMixin"
+	],
+		"injectors": {
+		"defaultRequire": 1
+	}
 }

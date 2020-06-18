@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class InGameHudMixin extends DrawableHelper
 {
-	@Inject(method = {"renderStatusEffectOverlay"}, at = @At("RETURN"))
+	@Inject(method = "renderStatusEffectOverlay", at = @At("RETURN"))
 	private void onRenderStatusEffectOverlay(CallbackInfo info)
 	{
 		// renders on screen text only if not in debug or hud is hidden

@@ -1,36 +1,36 @@
 {
-  "schemaVersion": 1,
-  "id": "fmc",
-  "version": "${version}",
+	"schemaVersion": 1,
+	"id": "fmc",
+	"version": "${version}",
 
-  "name": "FMC",
-  "description": "Vanilla enhancements",
-  "authors": [
-    "Flourick"
-  ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
+	"name": "FMC",
+	"description": "Vanilla client enhancements mod",
+	"authors": [
+		"Flourick"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/Flourick/FMC-fabric"
+	},
 
-  "license": "CC0-1.0",
-  "icon": "assets/fmc/icon.png",
+	"license": "CC0-1.0",
+	"icon": "assets/fmc/icon.png",
+	"environment": "*",
 
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "flour.fmc.FMC"
-    ]
-  },
-  "mixins": [
-    "fmc.mixins.json"
-  ],
+	"entrypoints": {
+		"main": [
+			"flour.fmc.FMC"
+		]
+	},
+	"mixins": [
+		"fmc.mixins.json"
+	],
 
-  "depends": {
-    "fabricloader": ">=0.7.4",
-    "minecraft": "1.15.x"
-  },
-  "suggests": {
-    "flamingo": "*"
-  }
+	"depends": {
+		"fabricloader": ">=0.7.4",
+		"minecraft": "1.15.x"
+	},
+	"custom": {
+		"modmenu:clientsideOnly": true
+	}
 }
