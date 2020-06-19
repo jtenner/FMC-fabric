@@ -1,5 +1,8 @@
 package flour.fmc.utils;
 
+import flour.fmc.FMC;
+import flour.fmc.options.FMCOptions;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.options.GameOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonListWidget;
@@ -21,9 +24,14 @@ public class FMCSettingsScreen extends GameOptionsScreen
 	protected void init()
 	{
 		this.list = new ButtonListWidget(this.minecraft, this.width, this.height, 32, this.height - 32, 25);
-		this.list.addAll(new Option[] {FMCOptions.BUTTON_POSITION});
+		this.list.addAll(new Option[] {FMCOptions.BUTTON_POSITION, FMCOptions.CROSSHAIR_SCALE});
+		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_RED_COMPONENT);
+		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_GREEN_COMPONENT);
+		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_BLUE_COMPONENT);
+		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT});
 		this.children.add(this.list);
 		this.addButton(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20, I18n.translate("gui.done"), (buttonWidget) -> {
+			FMC.OPTIONS.write();
 			this.minecraft.openScreen(this.parent);
 		}));
 	}
@@ -35,5 +43,10 @@ public class FMCSettingsScreen extends GameOptionsScreen
 		this.drawCenteredString(this.font, this.title.asFormattedString(), this.width / 2, 8, 16777215);
 
 		super.render(mouseX, mouseY, delta);
+	}
+
+	public void removed()
+	{
+		FMC.OPTIONS.write();
 	}
 }

@@ -46,7 +46,7 @@ public class InGameHudMixin extends DrawableHelper
 	@Overwrite
 	private void renderCrosshair()
 	{
-		// completely overwrite rendering the crosshair
+		// completele overwrite rendering the crosshair
 		final GameOptions gameOptions = FMC.MC.options;
 
         if(gameOptions.perspective != 0) {
@@ -72,9 +72,9 @@ public class InGameHudMixin extends DrawableHelper
 			RenderSystem.pushMatrix();
 			RenderSystem.translatef((float)(scaledWidth / 2), (float)(scaledHeight / 2), (float)this.getBlitOffset());
 			RenderSystem.enableBlend();
-			RenderSystem.blendColor(FMC.crosshairColor[0], FMC.crosshairColor[1], FMC.crosshairColor[2], FMC.crosshairColor[3]);
+			RenderSystem.blendColor(FMC.OPTIONS.crosshairColor.getNormRed(), FMC.OPTIONS.crosshairColor.getNormGreen(), FMC.OPTIONS.crosshairColor.getNormBlue(), FMC.OPTIONS.crosshairColor.getNormAlpha());
 			RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.CONSTANT_COLOR, GlStateManager.DstFactor.ZERO, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
-			RenderSystem.scaled(FMC.crosshairScale, FMC.crosshairScale, 1.0d);
+			RenderSystem.scaled(FMC.OPTIONS.crosshairScale, FMC.OPTIONS.crosshairScale, 1.0d);
 			this.blit((int)(-15 / 2), (int)(-15 / 2), 0, 0, 15, 15);
 			RenderSystem.disableBlend();
 			RenderSystem.popMatrix();

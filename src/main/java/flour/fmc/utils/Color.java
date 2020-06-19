@@ -38,6 +38,23 @@ public class Color
 		this.packed = packed;
 	}
 
+	public float getNormAlpha()
+	{
+		return (float)alpha / 255;
+	}
+	public float getNormRed()
+	{
+		return (float)red / 255;
+	}
+	public float getNormGreen()
+	{
+		return (float)green / 255;
+	}
+	public float getNormBlue()
+	{
+		return (float)blue / 255;
+	}
+
 	public int getAlpha()
 	{
 		return alpha;

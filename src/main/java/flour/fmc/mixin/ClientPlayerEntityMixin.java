@@ -21,8 +21,9 @@ public class ClientPlayerEntityMixin
 	@Inject(method = "tickMovement", at = @At("HEAD"))
 	private void onTickMovement(CallbackInfo info)
 	{
-		// Disables the 'Double-tap W to sprint' bs
-		this.field_3935 = -1;
+		if(FMC.OPTIONS.disableWToSprint) {
+			this.field_3935 = -1;
+		}
 	}
 
 	@Inject(method = "setShowsDeathScreen", at = @At("HEAD"))
