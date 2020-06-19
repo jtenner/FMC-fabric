@@ -30,13 +30,7 @@ public class FMCOptions
 		init();
 	}
 
-	//#region CONFIG VARS
-
 	private ButtonPosition buttonPosition;
-
-	//#endregion
-	
-	//#region SETTERS & GETTERS
 
 	public ButtonPosition getButtonPosition()
 	{
@@ -49,15 +43,13 @@ public class FMCOptions
 		write();
 	}
 
-	//#endregion
-
-	//#region ENUMS & OPTIONS
+	//region OPTIONS & ENUMS
 
 	public static final CyclingOption BUTTON_POSITION = new CyclingOption("nope", (gameOptions, integer) -> {
 		FMC.OPTIONS.setButtonPosition(ButtonPosition.getOption(FMC.OPTIONS.buttonPosition.getId() + integer));
 	}, (gameOptions, cyclingOption) -> {
 		return "FMC Button Position: " + FMC.OPTIONS.buttonPosition;
-	}); 
+	});
 
 	public enum ButtonPosition
 	{
@@ -92,19 +84,25 @@ public class FMCOptions
 			return id;
 		}
 
-		public ButtonPosition match(String m)
+		public static ButtonPosition match(String m)
 		{
-			for(ButtonPosition buttonPosition : BUTTON_POSITIONS) {
-				if(m.equals(buttonPosition.position)) {
-					return buttonPosition;
-				}
-			}
+			switch(m) {
+				case "Right":
+					return ButtonPosition.RIGHT;
 
-			return null;
+				case "Left":
+					return ButtonPosition.LEFT;
+
+				case "Center":
+					return ButtonPosition.CENTER;
+
+				default:
+					return null;
+			}
 		}
 	}
 
-	//#endregion
+	//endregion
 
 	private void init()
 	{
@@ -124,6 +122,12 @@ public class FMCOptions
 
 				switch(key) {
 					case "buttonPosition":
+						ButtonPosition bPos = ButtonPosition.match(value);
+
+						if(bPos != null) {
+							this.buttonPosition = bPos;
+						}
+
 						break;
 				}
 			});
