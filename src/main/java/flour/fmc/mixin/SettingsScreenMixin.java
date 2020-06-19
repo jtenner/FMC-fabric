@@ -37,7 +37,7 @@ public class SettingsScreenMixin extends Screen
 	{
 		int x, y, l;
 
-		switch(FMC.OPTIONS.buttonPosition) {
+		switch(FMC.OPTIONS.getButtonPosition()) {
 			case CENTER:
 				x = this.width / 2 - 155;
 				y = this.height / 6 + 24 - 6;

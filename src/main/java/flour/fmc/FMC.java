@@ -2,7 +2,6 @@ package flour.fmc;
 
 import flour.fmc.utils.FMCOptions;
 import flour.fmc.utils.OnScreenText;
-import flour.fmc.utils.FMCOptions.ButtonPosition;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
 
@@ -30,7 +29,7 @@ public class FMC implements ModInitializer
 	{
 		INSTANCE = this;
 		MC = MinecraftClient.getInstance();
-		OPTIONS = new FMCOptions(ButtonPosition.RIGHT);
+		OPTIONS = new FMCOptions();
 
 		this.X = 0.0D;
 		this.Y = 0.0D;
