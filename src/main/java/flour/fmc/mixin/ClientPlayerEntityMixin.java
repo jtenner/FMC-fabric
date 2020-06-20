@@ -28,7 +28,7 @@ public class ClientPlayerEntityMixin
 
 	@Inject(method = "setShowsDeathScreen", at = @At("HEAD"))
 	private void afterDeath(CallbackInfo info) {
-		if(FMC.INSTANCE.isAfterDeath) {
+		if(FMC.INSTANCE.isAfterDeath && FMC.OPTIONS.showDeathCoordinates) {
 			FMC.INSTANCE.isAfterDeath = false;
 			FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText(String.format("You died at X: %.01f Z: %.01f, Y: %.01f in %s!", FMC.INSTANCE.getLastDeathX(), FMC.INSTANCE.getLastDeathZ(), FMC.INSTANCE.getLastDeathY(), FMC.INSTANCE.getLastDeathWorld())));
 		}

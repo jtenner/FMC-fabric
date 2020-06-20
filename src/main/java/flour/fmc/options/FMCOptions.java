@@ -38,8 +38,28 @@ public class FMCOptions
 	public Color crosshairColor;
 	public double crosshairScale;
 	public boolean disableWToSprint;
+	public boolean showDeathCoordinates;
+	public boolean verticalCoordinates;
 
 	//region OPTIONS & ENUMS
+
+	public static final MyCyclingOption VERTICAL_COORDINATES = new MyCyclingOption(
+		(gameOptions, integer) -> {
+			FMC.OPTIONS.verticalCoordinates = !FMC.OPTIONS.verticalCoordinates;
+		},
+		(gameOptions, cyclingOption) -> {
+			return "HUD Coordinates: " + (FMC.OPTIONS.verticalCoordinates ? "Vertical" : "Horizontal");
+		}
+	);
+
+	public static final MyBooleanOption SHOW_DEATH_COORDINATES = new MyBooleanOption("Show Death Coordinates",
+		(gameOptions) -> {
+			return FMC.OPTIONS.showDeathCoordinates;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.showDeathCoordinates = bool;
+		}
+	);
 
 	public static final MyBooleanOption DISABLE_W_TO_SPRINT = new MyBooleanOption("Disable 'W' To Sprint",
 		(gameOptions) -> {
@@ -167,6 +187,8 @@ public class FMCOptions
 			printWriter.println("crosshairScale:" + BigDecimal.valueOf(this.crosshairScale).setScale(2, RoundingMode.HALF_UP));
 			printWriter.println("crosshairColor:" + this.crosshairColor.getPacked());
 			printWriter.println("disableWToSprint:" + this.disableWToSprint);
+			printWriter.println("showDeathCoordinates:" + this.showDeathCoordinates);
+			printWriter.println("verticalCoordinates:" + this.verticalCoordinates);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -223,7 +245,17 @@ public class FMCOptions
 						break;
 
 					case "disableWToSprint":
-						this.disableWToSprint = "true".equals(value);
+						this.disableWToSprint = "true".equalsIgnoreCase(value);
+
+						break;
+					
+					case "showDeathCoordinates":
+						this.showDeathCoordinates = "true".equalsIgnoreCase(value);
+
+						break;
+
+					case "verticalCoordinates":
+						this.verticalCoordinates = "true".equalsIgnoreCase(value);
 
 						break;
 				}
@@ -240,5 +272,7 @@ public class FMCOptions
 		this.crosshairScale = 1.0D;
 		this.crosshairColor = new Color(255, 255, 255);
 		this.disableWToSprint = true;
+		this.showDeathCoordinates = true;
+		this.verticalCoordinates = false;
 	}
 }
