@@ -14,7 +14,7 @@ Vanilla enhancements fabric mod
 
 There are currently four main features. Everything is configurable in ingame options menu called 'FMC...'
 
-#### Crosshair
+### Crosshair
 
 This mod disables crosshair changing it's color based on background and instead let's you choose the static color yourself. You can also set the scale of the crosshair.
 
@@ -22,15 +22,15 @@ If you use a crosshair from a resource pack that is already colored or you wish 
 
 NOTE: Crosshair in resource pack is the upper-right 15x15 pixels in *assets/minecraft/textures/gui/icons.png*
 
-#### HUD Info
+### HUD Info
 
 Shows your location, pitch, cardinal direction and block light while ingame.
 
-#### Disable 'W' To Sprint
+### Disable 'W' To Sprint
 
 The header says it all. Gets rid of one of the most annoying features.
 
-#### Death Coordinates
+### Death Coordinates
 
 Sends your last death coordinates in chat after you respawn (only visible to you).
 
