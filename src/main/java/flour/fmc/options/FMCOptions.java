@@ -29,7 +29,7 @@ public class FMCOptions
 
 	public FMCOptions()
 	{
-		this.optionsFile = new File(optionsFile, "fmcoptions.txt");
+		this.optionsFile = new File(FMC.MC.runDirectory, "fmcoptions.txt");
 
 		init();
 	}
@@ -40,8 +40,18 @@ public class FMCOptions
 	public boolean disableWToSprint;
 	public boolean showDeathCoordinates;
 	public boolean verticalCoordinates;
+	public boolean showHUDInfo;
 
 	//region OPTIONS & ENUMS
+
+	public static final MyCyclingOption SHOW_HUD_INFO = new MyCyclingOption(
+		(gameOptions, integer) -> {
+			FMC.OPTIONS.showHUDInfo = !FMC.OPTIONS.showHUDInfo;
+		},
+		(gameOptions, cyclingOption) -> {
+			return "HUD Info: " + (FMC.OPTIONS.showHUDInfo ? "Visible" : "Hidden");
+		}
+	);
 
 	public static final MyCyclingOption VERTICAL_COORDINATES = new MyCyclingOption(
 		(gameOptions, integer) -> {
@@ -189,6 +199,7 @@ public class FMCOptions
 			printWriter.println("disableWToSprint:" + this.disableWToSprint);
 			printWriter.println("showDeathCoordinates:" + this.showDeathCoordinates);
 			printWriter.println("verticalCoordinates:" + this.verticalCoordinates);
+			printWriter.println("showHUDInfo:" + this.showHUDInfo);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -204,7 +215,11 @@ public class FMCOptions
 			return;
 		}
 
-		// read
+		read();
+	}
+
+	private void read()
+	{
 		try(BufferedReader bufferedReader = Files.newReader(this.optionsFile, StandardCharsets.UTF_8)) {
 			bufferedReader.lines().forEach((line) -> {
 				String[] v = line.split(":");
@@ -258,6 +273,11 @@ public class FMCOptions
 						this.verticalCoordinates = "true".equalsIgnoreCase(value);
 
 						break;
+
+					case "showHUDInfo":
+						this.showHUDInfo = "true".equalsIgnoreCase(value);
+
+						break;
 				}
 			});
 		}
@@ -274,5 +294,6 @@ public class FMCOptions
 		this.disableWToSprint = true;
 		this.showDeathCoordinates = true;
 		this.verticalCoordinates = false;
+		this.showHUDInfo = true;
 	}
 }

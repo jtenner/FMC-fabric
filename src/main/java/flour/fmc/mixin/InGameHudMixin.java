@@ -26,7 +26,7 @@ public class InGameHudMixin extends DrawableHelper
 	private void onRenderStatusEffectOverlay(CallbackInfo info)
 	{
 		// renders on screen text only if not in debug or hud is hidden or if options don't say so
-		if(FMC.MC.options.debugEnabled || FMC.MC.options.hudHidden) {
+		if(FMC.MC.options.debugEnabled || FMC.MC.options.hudHidden || !FMC.OPTIONS.showHUDInfo) {
 			return;	
 		}
 
