@@ -20,7 +20,7 @@ This mod disables crosshair changing it's color based on background and instead 
 
 If you use a crosshair from a resource pack that is already colored or you wish to have a crosshair that has multiple colors, set the color to white which will make it so only colors from the resource pack are used.
 
-NOTE: Crosshair in resource pack is the upper-right 15x15 pixels in *assets/minecraft/textures/gui/icons.png*
+NOTE: Crosshair in resource pack is the upper-left 15x15 pixels in *assets/minecraft/textures/gui/icons.png*
 
 ### HUD Info
 
