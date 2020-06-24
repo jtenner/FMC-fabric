@@ -7,13 +7,14 @@ import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.OptionButtonWidget;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.Option;
+import net.minecraft.text.Text;
 
 public class MyCyclingOption extends Option
 {
 	private final BiConsumer<GameOptions, Integer> setter;
-	private final BiFunction<GameOptions, MyCyclingOption, String> messageProvider;
+	private final BiFunction<GameOptions, MyCyclingOption, Text> messageProvider;
 
-	public MyCyclingOption(BiConsumer<GameOptions, Integer> setter, BiFunction<GameOptions, MyCyclingOption, String> messageProvider)
+	public MyCyclingOption(BiConsumer<GameOptions, Integer> setter, BiFunction<GameOptions, MyCyclingOption, Text> messageProvider)
 	{
 		super("nope");
 		this.setter = setter;
@@ -33,8 +34,8 @@ public class MyCyclingOption extends Option
 		});
 	}
 
-	public String getMessage(GameOptions options)
+	public Text getMessage(GameOptions options)
 	{
-		return (String) messageProvider.apply(options, this);
+		return (Text) messageProvider.apply(options, this);
 	}
 }

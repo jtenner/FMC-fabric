@@ -9,7 +9,7 @@
 		"InGameHudMixin",
 		"ClientPlayerEntityMixin",
 		"ClientPlayNetworkHandlerMixin",
-		"SettingsScreenMixin"
+		"OptionsScreenMixin"
 	],
 		"injectors": {
 		"defaultRequire": 1

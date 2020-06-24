@@ -4,9 +4,10 @@ import flour.fmc.FMC;
 
 import flour.fmc.utils.FMCSettingsScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.SettingsScreen;
+import net.minecraft.client.gui.screen.options.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.options.GameOptions;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(SettingsScreen.class)
-public class SettingsScreenMixin extends Screen
+@Mixin(OptionsScreen.class)
+public class OptionsScreenMixin extends Screen
 {
 	@Shadow
 	private final Screen parent;
@@ -25,7 +26,7 @@ public class SettingsScreenMixin extends Screen
 	private final GameOptions settings;
 
 	// IGNORED
-	public SettingsScreenMixin(Screen parent, GameOptions gameOptions)
+	public OptionsScreenMixin(Screen parent, GameOptions gameOptions)
 	{
 		super(new TranslatableText("options.title", new Object[0]));
 		this.parent = parent;
@@ -57,8 +58,8 @@ public class SettingsScreenMixin extends Screen
 				break;
 		}
 
-		this.addButton(new ButtonWidget(x, y, l, 20, "FMC...", (buttonWidget) -> {
-			this.minecraft.openScreen(new FMCSettingsScreen(this, this.settings));
+		this.addButton(new ButtonWidget(x, y, l, 20, new LiteralText("FMC..."), (buttonWidget) -> {
+			this.client.openScreen(new FMCSettingsScreen(this, this.settings));
 		}));
 	}
 }

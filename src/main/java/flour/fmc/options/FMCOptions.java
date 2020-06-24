@@ -21,6 +21,7 @@ import com.google.common.io.Files;
 import org.apache.logging.log4j.LogManager;
 
 import net.minecraft.client.options.DoubleOption;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.MathHelper;
 
 public class FMCOptions
@@ -49,7 +50,7 @@ public class FMCOptions
 			FMC.OPTIONS.showHUDInfo = !FMC.OPTIONS.showHUDInfo;
 		},
 		(gameOptions, cyclingOption) -> {
-			return "HUD Info: " + (FMC.OPTIONS.showHUDInfo ? "Visible" : "Hidden");
+			return new LiteralText("HUD Info: " + (FMC.OPTIONS.showHUDInfo ? "Visible" : "Hidden"));
 		}
 	);
 
@@ -58,7 +59,7 @@ public class FMCOptions
 			FMC.OPTIONS.verticalCoordinates = !FMC.OPTIONS.verticalCoordinates;
 		},
 		(gameOptions, cyclingOption) -> {
-			return "HUD Coordinates: " + (FMC.OPTIONS.verticalCoordinates ? "Vertical" : "Horizontal");
+			return new LiteralText("HUD Coordinates: " + (FMC.OPTIONS.verticalCoordinates ? "Vertical" : "Horizontal"));
 		}
 	);
 
@@ -88,7 +89,7 @@ public class FMCOptions
 			FMC.OPTIONS.crosshairColor = new Color(FMC.OPTIONS.crosshairColor.getAlpha(), red.intValue(), FMC.OPTIONS.crosshairColor.getGreen(), FMC.OPTIONS.crosshairColor.getBlue());
 		},
 		(gameOptions, doubleOption) -> {
-			return "Crosshair Red Component: " + FMC.OPTIONS.crosshairColor.getRed();
+			return new LiteralText("Crosshair Red Component: " + FMC.OPTIONS.crosshairColor.getRed());
 		}
 	);
 
@@ -100,7 +101,7 @@ public class FMCOptions
 			FMC.OPTIONS.crosshairColor = new Color(FMC.OPTIONS.crosshairColor.getAlpha(), FMC.OPTIONS.crosshairColor.getRed(), green.intValue(), FMC.OPTIONS.crosshairColor.getBlue());
 		},
 		(gameOptions, doubleOption) -> {
-			return "Crosshair Green Component: " + FMC.OPTIONS.crosshairColor.getGreen();
+			return new LiteralText("Crosshair Green Component: " + FMC.OPTIONS.crosshairColor.getGreen());
 		}
 	);
 
@@ -112,7 +113,7 @@ public class FMCOptions
 			FMC.OPTIONS.crosshairColor = new Color(FMC.OPTIONS.crosshairColor.getAlpha(), FMC.OPTIONS.crosshairColor.getRed(), FMC.OPTIONS.crosshairColor.getGreen(), blue.intValue());
 		},
 		(gameOptions, doubleOption) -> {
-			return "Crosshair Blue Component: " + FMC.OPTIONS.crosshairColor.getBlue();
+			return new LiteralText("Crosshair Blue Component: " + FMC.OPTIONS.crosshairColor.getBlue());
 		}
 	);
 
@@ -124,7 +125,7 @@ public class FMCOptions
 			FMC.OPTIONS.crosshairScale = scale;
 		},
 		(gameOptions, doubleOption) -> {
-			return "Crosshair Scale: " + BigDecimal.valueOf(FMC.OPTIONS.crosshairScale).setScale(2, RoundingMode.HALF_UP);
+			return new LiteralText("Crosshair Scale: " + BigDecimal.valueOf(FMC.OPTIONS.crosshairScale).setScale(2, RoundingMode.HALF_UP));
 		}
 	);
 
@@ -133,7 +134,7 @@ public class FMCOptions
 			FMC.OPTIONS.buttonPosition = ButtonPosition.getOption(FMC.OPTIONS.buttonPosition.getId() + integer);
 		},
 		(gameOptions, cyclingOption) -> {
-			return "FMC Button Position: " + FMC.OPTIONS.buttonPosition;
+			return new LiteralText("FMC Button Position: " + FMC.OPTIONS.buttonPosition);
 		}
 	);
 

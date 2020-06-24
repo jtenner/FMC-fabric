@@ -2,10 +2,14 @@ package flour.fmc.options;
 
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+
+import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.OptionButtonWidget;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.Option;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 public class MyBooleanOption extends Option
 {
@@ -39,14 +43,14 @@ public class MyBooleanOption extends Option
 
 	public AbstractButtonWidget createButton(GameOptions options, int x, int y, int width)
 	{
-		return new OptionButtonWidget(x, y, width, 20, this, this.getDisplayString(options), (buttonWidget) -> {
+		return new OptionButtonWidget(x, y, width, 20, this, getDisplayString(options), (buttonWidget) -> {
 			set(options);
 			buttonWidget.setMessage(getDisplayString(options));
 		});
 	}
 
-	public String getDisplayString(GameOptions options)
+	public Text getDisplayString(GameOptions options)
 	{
-		return name + ": " + (this.get(options) ? "ON" : "OFF");
+		return new LiteralText(name + ": ").append(ScreenTexts.getToggleText(this.get(options)));
 	}
 }
