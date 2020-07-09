@@ -12,7 +12,7 @@ Vanilla enhancements fabric mod
 
 ## Features
 
-There are currently four main features. Everything is configurable in ingame options menu called 'FMC...'
+List of main features. Everything is configurable in ingame options menu called 'FMC...'
 
 ### Crosshair
 
