@@ -29,7 +29,7 @@ public class FMCSettingsScreen extends GameOptionsScreen
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_RED_COMPONENT);
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_GREEN_COMPONENT);
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_BLUE_COMPONENT);
-		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SHOW_DEATH_COORDINATES, FMCOptions.VERTICAL_COORDINATES, FMCOptions.SHOW_HUD_INFO});
+		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SHOW_DEATH_COORDINATES, FMCOptions.VERTICAL_COORDINATES, FMCOptions.SHOW_HUD_INFO, FMCOptions.NO_TOOL_BREAKING});
 		this.children.add(this.list);
 		this.addButton(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20, ScreenTexts.DONE, (buttonWidget) -> {
 			FMC.OPTIONS.write();

@@ -42,8 +42,18 @@ public class FMCOptions
 	public boolean showDeathCoordinates;
 	public boolean verticalCoordinates;
 	public boolean showHUDInfo;
+	public boolean noToolBreaking;
 
 	//region OPTIONS & ENUMS
+
+	public static final MyCyclingOption NO_TOOL_BREAKING = new MyCyclingOption(
+		(gameOptions, integer) -> {
+			FMC.OPTIONS.noToolBreaking = !FMC.OPTIONS.noToolBreaking;
+		},
+		(gameOptions, cyclingOption) -> {
+			return new LiteralText("No Tool Breaking: " + (FMC.OPTIONS.noToolBreaking ? "Enabled" : "Disabled"));
+		}
+	);
 
 	public static final MyCyclingOption SHOW_HUD_INFO = new MyCyclingOption(
 		(gameOptions, integer) -> {
@@ -201,6 +211,7 @@ public class FMCOptions
 			printWriter.println("showDeathCoordinates:" + this.showDeathCoordinates);
 			printWriter.println("verticalCoordinates:" + this.verticalCoordinates);
 			printWriter.println("showHUDInfo:" + this.showHUDInfo);
+			printWriter.println("noToolBreaking:" + this.noToolBreaking);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -262,22 +273,22 @@ public class FMCOptions
 
 					case "disableWToSprint":
 						this.disableWToSprint = "true".equalsIgnoreCase(value);
-
 						break;
 					
 					case "showDeathCoordinates":
 						this.showDeathCoordinates = "true".equalsIgnoreCase(value);
-
 						break;
 
 					case "verticalCoordinates":
 						this.verticalCoordinates = "true".equalsIgnoreCase(value);
-
 						break;
 
 					case "showHUDInfo":
 						this.showHUDInfo = "true".equalsIgnoreCase(value);
+						break;
 
+					case "noToolBreaking":
+						this.noToolBreaking = "true".equalsIgnoreCase(value);
 						break;
 				}
 			});
@@ -296,5 +307,6 @@ public class FMCOptions
 		this.showDeathCoordinates = true;
 		this.verticalCoordinates = false;
 		this.showHUDInfo = true;
+		this.noToolBreaking = false;
 	}
 }
