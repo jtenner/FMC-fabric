@@ -34,7 +34,7 @@ The header says it all. Gets rid of one of the most annoying features.
 
 Sends your last death coordinates in chat after you respawn (only visible to you).
 
-### No Tool Breaking
+### No Tool Breaking (WIP)
 
 Tools in your MAIN hand become unusable when at 1 durability. **YOUR TOOLS CAN STILL BREAK**! For example if you have 2 durability sword and you destroy a block.
 
