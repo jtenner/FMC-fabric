@@ -5,7 +5,11 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MiningToolItem;
+import net.minecraft.item.OnAStickItem;
+import net.minecraft.item.ShearsItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TridentItem;
 import net.minecraft.util.ActionResult;
@@ -23,7 +27,7 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "interactItem", at = @At("HEAD"), cancellable = true)
 	public void onInteractItem(CallbackInfoReturnable<ActionResult> info)
 	{
-		System.out.println("Interact item!");
+		//System.out.println("Interact item!");
 
 		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
@@ -40,7 +44,17 @@ public class ClientPlayerInteractionManagerMixin
 						info.setReturnValue(ActionResult.FAIL);
 					}
 				}
-				else {
+				else if(mainHandItem.getItem() instanceof OnAStickItem) {
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+				else if(mainHandItem.getItem() instanceof TridentItem) {
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+				else if(mainHandItem.getItem() instanceof BowItem) {
 					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
 						info.setReturnValue(ActionResult.FAIL);
 					}
@@ -58,7 +72,17 @@ public class ClientPlayerInteractionManagerMixin
 						info.setReturnValue(ActionResult.FAIL);
 					}
 				}
-				else {
+				else if(offHandItem.getItem() instanceof OnAStickItem) {
+					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+				else if(offHandItem.getItem() instanceof TridentItem) {
+					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+				else if(offHandItem.getItem() instanceof BowItem) {
 					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
 						info.setReturnValue(ActionResult.FAIL);
 					}
@@ -70,21 +94,35 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
 	public void onInteractBlock(CallbackInfoReturnable<ActionResult> info)
 	{
-		System.out.println("Interact block!");
+		//System.out.println("Interact block!");
 
 		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
 			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
-					info.setReturnValue(ActionResult.FAIL);
+				if(mainHandItem.getItem() instanceof MiningToolItem){
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+				else if(mainHandItem.getItem() instanceof FlintAndSteelItem){
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
 				}
 			}
 
 			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
-					info.setReturnValue(ActionResult.FAIL);
+				if(offHandItem.getItem() instanceof MiningToolItem) {
+					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+				else if(offHandItem.getItem() instanceof FlintAndSteelItem){
+					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
 				}
 			}
 		}
@@ -93,10 +131,9 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "attackBlock", at = @At("HEAD"), cancellable = true)
 	public void onAttackBlock(CallbackInfoReturnable<Boolean> info)
 	{
-		System.out.println("Attack block!");
+		//System.out.println("Attack block!");
 
 		if(FMC.OPTIONS.noToolBreaking) {
-			//ItemStack handItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? FMC.MC.player.getStackInHand(Hand.OFF_HAND) : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -112,7 +149,13 @@ public class ClientPlayerInteractionManagerMixin
 						info.setReturnValue(false);
 					}
 				}
-				else {
+				else if(mainHandItem.getItem() instanceof MiningToolItem){
+					// ONE DURA
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(false);
+					}
+				}
+				else if(mainHandItem.getItem() instanceof ShearsItem){
 					// ONE DURA
 					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
 						info.setReturnValue(false);
@@ -125,7 +168,7 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "breakBlock", at = @At("HEAD"), cancellable = true)
 	public void onBreakBlock(CallbackInfoReturnable<Boolean> info)
 	{
-		System.out.println("Break block!");
+		//System.out.println("Break block!");
 
 		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
@@ -143,7 +186,13 @@ public class ClientPlayerInteractionManagerMixin
 						info.setReturnValue(false);
 					}
 				}
-				else {
+				else if(mainHandItem.getItem() instanceof MiningToolItem){
+					// ONE DURA
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(false);
+					}
+				}
+				else if(mainHandItem.getItem() instanceof ShearsItem){
 					// ONE DURA
 					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
 						info.setReturnValue(false);
@@ -156,30 +205,82 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
 	public void onAttackEntity(CallbackInfo info)
 	{
-		System.out.println("Attack entity!");
+		//System.out.println("Attack entity!");
 
-		if(FMC.OPTIONS.noToolBreaking && FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isDamaged() && (FMC.MC.player.getStackInHand(Hand.MAIN_HAND).getMaxDamage() - FMC.MC.player.getStackInHand(Hand.MAIN_HAND).getDamage() < 3)) {
-			info.cancel();
+		if(FMC.OPTIONS.noToolBreaking) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+
+			if(mainHandItem.isDamaged()) {
+				if(mainHandItem.getItem() instanceof SwordItem) {
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.cancel();
+					}
+				}
+				else if(mainHandItem.getItem() instanceof MiningToolItem) {
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 3) {
+						info.cancel();
+					}
+				}
+				else if(mainHandItem.getItem() instanceof TridentItem) {
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.cancel();
+					}
+				}
+			}
 		}
 	}
 
 	@Inject(method = "interactEntity", at = @At("HEAD"), cancellable = true)
 	public void onInteractEntity(CallbackInfoReturnable<ActionResult> info)
 	{
-		System.out.println("Interact entity!");
+		//System.out.println("Interact entity!");
 
-		if(FMC.OPTIONS.noToolBreaking && FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isDamaged() && (FMC.MC.player.getStackInHand(Hand.MAIN_HAND).getMaxDamage() - FMC.MC.player.getStackInHand(Hand.MAIN_HAND).getDamage() < 3)) {
-			info.setReturnValue(ActionResult.FAIL);
+		if(FMC.OPTIONS.noToolBreaking) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(mainHandItem.getItem() instanceof ShearsItem){
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(offHandItem.getItem() instanceof ShearsItem) {
+					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+			}
 		}
 	}
 
 	@Inject(method = "interactEntityAtLocation", at = @At("HEAD"), cancellable = true)
 	public void onInteractEntityAtLocation(CallbackInfoReturnable<ActionResult> info)
 	{
-		System.out.println("Interact entity at location!");
+		//System.out.println("Interact entity at location!");
 
-		if(FMC.OPTIONS.noToolBreaking && FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isDamaged() && (FMC.MC.player.getStackInHand(Hand.MAIN_HAND).getMaxDamage() - FMC.MC.player.getStackInHand(Hand.MAIN_HAND).getDamage() < 3)) {
-			info.setReturnValue(ActionResult.FAIL);
+		if(FMC.OPTIONS.noToolBreaking) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(mainHandItem.getItem() instanceof ShearsItem){
+					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(offHandItem.getItem() instanceof ShearsItem) {
+					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
+						info.setReturnValue(ActionResult.FAIL);
+					}
+				}
+			}
 		}
 	}
 }
