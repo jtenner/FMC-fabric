@@ -40,13 +40,13 @@ Makes your tools stop working at certain durability at certain tasks (ex. pickax
 
 ## Preview
 
-Custom resource pack crosshair and static green color, HUD info.
+Static crosshair color, HUD info, death message & tool breaking warning.
 
-![hud](https://user-images.githubusercontent.com/33128006/87231745-16148b80-c3ba-11ea-9e47-60b743a6db51.png)
+![hud](https://user-images.githubusercontent.com/33128006/87247992-50803600-c457-11ea-88fe-c4cc4dea2f4b.png)
 
-Ingame menu (with default settings)
+Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/87231884-0e091b80-c3bb-11ea-8a74-e538807fea9e.png)
+![menu](https://user-images.githubusercontent.com/33128006/87247991-4f4f0900-c457-11ea-98eb-3486ce7ceaa4.png)
 
 ----
 
