@@ -2,11 +2,12 @@ package flour.fmc.utils;
 
 import flour.fmc.FMC;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
 
 public class OnScreenText
 {
-	public void drawCoordinatesTextLower(MatrixStack matrixStack)
+	public static void drawCoordinatesTextLower(MatrixStack matrixStack)
 	{
 		if(FMC.OPTIONS.verticalCoordinates) {
 			final String X = String.format("X: %.01f", FMC.MC.player.getX());
@@ -23,7 +24,7 @@ public class OnScreenText
 		}
 	}
 
-	public void drawCoordinatesTextUpper(MatrixStack matrixStack)
+	public static void drawCoordinatesTextUpper(MatrixStack matrixStack)
 	{
 		if(FMC.OPTIONS.verticalCoordinates) {
 			final String X = String.format("X: %.01f", FMC.MC.player.getX());
@@ -40,7 +41,7 @@ public class OnScreenText
 		}
 	}
 
-	public void drawPFTextLower(MatrixStack matrixStack)
+	public static void drawPFTextLower(MatrixStack matrixStack)
 	{
 		String direction = FMC.MC.getCameraEntity().getHorizontalFacing().asString();
 		direction = direction.substring(0, 1).toUpperCase() + direction.substring(1);
@@ -49,7 +50,7 @@ public class OnScreenText
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, PFText, FMC.MC.getWindow().getScaledWidth() - FMC.MC.textRenderer.getWidth(PFText) - 1, FMC.MC.getWindow().getScaledHeight() - FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
 	}
 
-	public void drawPFTextUpper(MatrixStack matrixStack)
+	public static void drawPFTextUpper(MatrixStack matrixStack)
 	{
 		String direction = FMC.MC.getCameraEntity().getHorizontalFacing().asString();
 		direction = direction.substring(0, 1).toUpperCase() + direction.substring(1);
@@ -58,7 +59,7 @@ public class OnScreenText
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, PFText, FMC.MC.getWindow().getScaledWidth() - FMC.MC.textRenderer.getWidth(PFText) - 1, 2, Color.WHITE.getPacked());
 	}
 
-	public void drawLightLevelTextLower(MatrixStack matrixStack)
+	public static void drawLightLevelTextLower(MatrixStack matrixStack)
 	{
 		int blockLightLevel = FMC.MC.world.getChunkManager().getLightingProvider().get(LightType.BLOCK).getLightLevel(FMC.MC.getCameraEntity().getBlockPos());
 
@@ -66,11 +67,28 @@ public class OnScreenText
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, curYPRText, FMC.MC.getWindow().getScaledWidth() - FMC.MC.textRenderer.getWidth(curYPRText) - 1, FMC.MC.getWindow().getScaledHeight() - 2*FMC.MC.textRenderer.fontHeight - 1, Color.WHITE.getPacked());
 	}
 
-	public void drawLightLevelTextUpper(MatrixStack matrixStack)
+	public static void drawLightLevelTextUpper(MatrixStack matrixStack)
 	{
 		int blockLightLevel = FMC.MC.world.getChunkManager().getLightingProvider().get(LightType.BLOCK).getLightLevel(FMC.MC.getCameraEntity().getBlockPos());
 
 		final String curYPRText = String.format("BL: %d", blockLightLevel);
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, curYPRText, FMC.MC.getWindow().getScaledWidth() - FMC.MC.textRenderer.getWidth(curYPRText) - 1, FMC.MC.textRenderer.fontHeight + 3, Color.WHITE.getPacked());
+	}
+
+	public static void drawToolWarningText(MatrixStack matrixStack)
+	{
+		// last half a second fade-out
+		int alpha = MathHelper.clamp(MathHelper.ceil(25.5f * FMC.INSTANCE.toolWarningTextTicksLeft), 0, 255);
+
+		int y;
+		if(FMC.OPTIONS.upperToolBreakingWarning) {
+			y = (int)((-(FMC.MC.getWindow().getScaledHeight() / 2 * 1/FMC.OPTIONS.toolBreakingWarningScale)) + (2/FMC.OPTIONS.toolBreakingWarningScale));
+		}
+		else {
+			y = (int)(((FMC.MC.getWindow().getScaledHeight() / 2 * 1/FMC.OPTIONS.toolBreakingWarningScale)) - (FMC.MC.textRenderer.fontHeight + 60/FMC.OPTIONS.toolBreakingWarningScale));
+		}
+
+		final String ToolWarningText = "Tool durability below 3%!";
+		FMC.MC.textRenderer.drawWithShadow(matrixStack, ToolWarningText, (float) -(FMC.MC.textRenderer.getWidth(ToolWarningText) / 2), y, new Color(alpha, 255, 0, 0).getPacked());
 	}
 }

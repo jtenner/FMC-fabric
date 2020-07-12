@@ -1,6 +1,7 @@
 package flour.fmc.mixin;
 
 import flour.fmc.FMC;
+import flour.fmc.options.FMCOptions.NoToolBreakingMode;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
@@ -14,6 +15,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.TridentItem;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.MathHelper;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +31,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Interact item!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -89,6 +91,22 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+		}
 	}
 
 	@Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
@@ -96,7 +114,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Interact block!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -126,6 +144,22 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+		}
 	}
 
 	@Inject(method = "attackBlock", at = @At("HEAD"), cancellable = true)
@@ -133,7 +167,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Attack block!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -160,6 +194,22 @@ public class ClientPlayerInteractionManagerMixin
 					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
 						info.setReturnValue(false);
 					}
+				}
+			}
+		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
 				}
 			}
 		}
@@ -170,7 +220,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Break block!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -200,6 +250,22 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+		}
 	}
 
 	@Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
@@ -207,7 +273,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Attack entity!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -228,6 +294,22 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+		}
 	}
 
 	@Inject(method = "interactEntity", at = @At("HEAD"), cancellable = true)
@@ -235,7 +317,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Interact entity!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -255,6 +337,22 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+		}
 	}
 
 	@Inject(method = "interactEntityAtLocation", at = @At("HEAD"), cancellable = true)
@@ -262,7 +360,7 @@ public class ClientPlayerInteractionManagerMixin
 	{
 		//System.out.println("Interact entity at location!");
 
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -279,6 +377,22 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
 						info.setReturnValue(ActionResult.FAIL);
 					}
+				}
+			}
+		}
+		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
+					FMC.INSTANCE.defaultToolWarningTicks();
 				}
 			}
 		}

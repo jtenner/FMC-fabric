@@ -1,7 +1,8 @@
 package flour.fmc.mixin;
 
 import flour.fmc.FMC;
-
+import flour.fmc.utils.OnScreenText;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -16,6 +17,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,43 +25,62 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class InGameHudMixin extends DrawableHelper
 {
-	@Inject(method = "renderStatusEffectOverlay", at = @At("RETURN"))
-	private void onRenderStatusEffectOverlay(MatrixStack matrixStack, CallbackInfo info)
+	@Shadow
+	MinecraftClient client;
+
+	@Inject(method = "tick", at = @At("HEAD"))
+	private void onTick(CallbackInfo info)
+	{
+		if(FMC.INSTANCE.toolWarningTextTicksLeft > 0) {
+			FMC.INSTANCE.toolWarningTextTicksLeft -= 1;
+		}
+	}
+
+	@Inject(method = "render", at = @At("HEAD"))
+	private void onRender(MatrixStack matrixStack, float f, CallbackInfo info)
 	{
 		// renders on screen text only if not in debug or hud is hidden or if options don't say so
-		if(FMC.MC.options.debugEnabled || FMC.MC.options.hudHidden || !FMC.OPTIONS.showHUDInfo) {
+		if(this.client.options.debugEnabled || this.client.options.hudHidden || !FMC.OPTIONS.showHUDInfo) {
 			return;	
 		}
 
 		// HUD info moves to the top if chat is open
 		if(FMC.MC.currentScreen instanceof ChatScreen) {
-			FMC.INSTANCE.getOnScreenText().drawCoordinatesTextUpper(matrixStack);
-			FMC.INSTANCE.getOnScreenText().drawLightLevelTextUpper(matrixStack);
-			FMC.INSTANCE.getOnScreenText().drawPFTextUpper(matrixStack);
+			OnScreenText.drawCoordinatesTextUpper(matrixStack);
+			OnScreenText.drawLightLevelTextUpper(matrixStack);
+			OnScreenText.drawPFTextUpper(matrixStack);
 		}
 		else {
-			FMC.INSTANCE.getOnScreenText().drawCoordinatesTextLower(matrixStack);
-			FMC.INSTANCE.getOnScreenText().drawLightLevelTextLower(matrixStack);
-			FMC.INSTANCE.getOnScreenText().drawPFTextLower(matrixStack);
+			OnScreenText.drawCoordinatesTextLower(matrixStack);
+			OnScreenText.drawLightLevelTextLower(matrixStack);
+			OnScreenText.drawPFTextLower(matrixStack);
+		}
+
+		if(FMC.INSTANCE.toolWarningTextTicksLeft > 0) {
+			RenderSystem.pushMatrix();
+			RenderSystem.translatef((float)(this.client.getWindow().getScaledWidth() / 2), (float)(this.client.getWindow().getScaledHeight() / 2), (float)this.getZOffset());
+			RenderSystem.scaled(FMC.OPTIONS.toolBreakingWarningScale, FMC.OPTIONS.toolBreakingWarningScale, 1.0d);
+			OnScreenText.drawToolWarningText(matrixStack);
+			RenderSystem.popMatrix();
 		}
 	}
 
 	@Overwrite
 	private void renderCrosshair(MatrixStack matrixStack)
 	{
-		final GameOptions gameOptions = FMC.MC.options;
+		final GameOptions gameOptions = this.client.options;
 
-		int scaledWidth = FMC.MC.getWindow().getScaledWidth();
-		int scaledHeight = FMC.MC.getWindow().getScaledHeight();
+		int scaledWidth = this.client.getWindow().getScaledWidth();
+		int scaledHeight = this.client.getWindow().getScaledHeight();
 
 		if(gameOptions.perspective == 0) {
-			if(gameOptions.debugEnabled && !gameOptions.hudHidden && !FMC.MC.player.getReducedDebugInfo() && !gameOptions.reducedDebugInfo) {
+			if(gameOptions.debugEnabled && !gameOptions.hudHidden && !this.client.player.getReducedDebugInfo() && !gameOptions.reducedDebugInfo) {
 				RenderSystem.pushMatrix();
 				RenderSystem.translatef((float) (scaledWidth / 2), (float) (scaledHeight / 2), (float) this.getZOffset());
-				Camera camera = FMC.MC.gameRenderer.getCamera();
+				Camera camera = this.client.gameRenderer.getCamera();
 				RenderSystem.rotatef(camera.getPitch(), -1.0F, 0.0F, 0.0F);
 				RenderSystem.rotatef(camera.getYaw(), 0.0F, 1.0F, 0.0F);
-				RenderSystem.scalef(-1.0F, -1.0F, -1.0F);
+				RenderSystem.popMatrix();
 				RenderSystem.renderCrosshair(10);
 				RenderSystem.popMatrix();
 			}
@@ -74,13 +95,13 @@ public class InGameHudMixin extends DrawableHelper
 				RenderSystem.disableBlend();
 				RenderSystem.popMatrix();
 
-				if(FMC.MC.options.attackIndicator == AttackIndicator.CROSSHAIR) {
-					float f = FMC.MC.player.getAttackCooldownProgress(0.0F);
+				if(gameOptions.attackIndicator == AttackIndicator.CROSSHAIR) {
+					float f = this.client.player.getAttackCooldownProgress(0.0F);
 					boolean bl = false;
 
-					if(FMC.MC.targetedEntity != null && FMC.MC.targetedEntity instanceof LivingEntity && f >= 1.0F) {
-						bl = FMC.MC.player.getAttackCooldownProgressPerTick() > 5.0F;
-						bl &= FMC.MC.targetedEntity.isAlive();
+					if(this.client.targetedEntity != null && this.client.targetedEntity instanceof LivingEntity && f >= 1.0F) {
+						bl = this.client.player.getAttackCooldownProgressPerTick() > 5.0F;
+						bl &= this.client.targetedEntity.isAlive();
 					}
 					int j = scaledHeight / 2 - 7 + 16;
 					int k = scaledWidth / 2 - 8;

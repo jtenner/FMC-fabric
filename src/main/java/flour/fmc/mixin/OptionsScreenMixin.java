@@ -34,7 +34,7 @@ public class OptionsScreenMixin extends Screen
 	}
 
 	@Inject(method = "init", at = @At("RETURN"))
-	private void initNewButtons(CallbackInfo info)
+	private void onInit(CallbackInfo info)
 	{
 		int x, y, l;
 

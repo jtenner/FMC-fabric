@@ -39,19 +39,42 @@ public class FMCOptions
 	public Color crosshairColor;
 	public double crosshairScale;
 	public boolean disableWToSprint;
-	public boolean showDeathCoordinates;
+	public boolean sendDeathCoordinates;
 	public boolean verticalCoordinates;
 	public boolean showHUDInfo;
-	public boolean noToolBreaking;
+	public NoToolBreakingMode noToolBreaking;
+	public double toolBreakingWarningScale;
+	public boolean upperToolBreakingWarning;
 
-	//region OPTIONS & ENUMS
+	//region OPTIONS
+
+	public static final MyCyclingOption UPPER_TOOL_BREAKING_WARNING = new MyCyclingOption(
+		(gameOptions, integer) -> {
+			FMC.OPTIONS.upperToolBreakingWarning = !FMC.OPTIONS.upperToolBreakingWarning;
+		},
+		(gameOptions, cyclingOption) -> {
+			return new LiteralText("Tool Warning Position: " + (FMC.OPTIONS.upperToolBreakingWarning ? "Top" : "Bottom"));
+		}
+	);
+
+	public static final DoubleOption TOOL_BREAKING_WARNING_SCALE = new DoubleOption("nope", 1.0d, 4.0d, 0.01f,
+		(gameOptions) -> {
+			return FMC.OPTIONS.toolBreakingWarningScale;
+		},
+		(gameOptions, scale) -> {
+			FMC.OPTIONS.toolBreakingWarningScale = scale;
+		},
+		(gameOptions, doubleOption) -> {
+			return new LiteralText("Tool Warning Text Scale: " + BigDecimal.valueOf(FMC.OPTIONS.toolBreakingWarningScale).setScale(2, RoundingMode.HALF_UP));
+		}
+	);
 
 	public static final MyCyclingOption NO_TOOL_BREAKING = new MyCyclingOption(
 		(gameOptions, integer) -> {
-			FMC.OPTIONS.noToolBreaking = !FMC.OPTIONS.noToolBreaking;
+			FMC.OPTIONS.noToolBreaking = NoToolBreakingMode.getOption(FMC.OPTIONS.noToolBreaking.getId() + integer);
 		},
 		(gameOptions, cyclingOption) -> {
-			return new LiteralText("No Tool Breaking: " + (FMC.OPTIONS.noToolBreaking ? "Enabled" : "Disabled"));
+			return new LiteralText("No Tool Breaking: " + FMC.OPTIONS.noToolBreaking);
 		}
 	);
 
@@ -73,12 +96,12 @@ public class FMCOptions
 		}
 	);
 
-	public static final MyBooleanOption SHOW_DEATH_COORDINATES = new MyBooleanOption("Show Death Coordinates",
+	public static final MyBooleanOption SEND_DEATH_COORDINATES = new MyBooleanOption("Send Death Coordinates",
 		(gameOptions) -> {
-			return FMC.OPTIONS.showDeathCoordinates;
+			return FMC.OPTIONS.sendDeathCoordinates;
 		},
 		(gameOptions, bool) -> {
-			FMC.OPTIONS.showDeathCoordinates = bool;
+			FMC.OPTIONS.sendDeathCoordinates = bool;
 		}
 	);
 
@@ -91,7 +114,7 @@ public class FMCOptions
 		}
 	);
 
-	public static final DoubleOption CROSSHAIR_RED_COMPONENT = new DoubleOption("nope", 0.0D, 255.0D, 1.0F,
+	public static final DoubleOption CROSSHAIR_RED_COMPONENT = new DoubleOption("nope", 0.0d, 255.0d, 1.0f,
 		(gameOptions) -> {
 			return (double)FMC.OPTIONS.crosshairColor.getRed();
 		},
@@ -103,7 +126,7 @@ public class FMCOptions
 		}
 	);
 
-	public static final DoubleOption CROSSHAIR_GREEN_COMPONENT = new DoubleOption("nope", 0.0D, 255.0D, 1.0F,
+	public static final DoubleOption CROSSHAIR_GREEN_COMPONENT = new DoubleOption("nope", 0.0d, 255.0d, 1.0f,
 		(gameOptions) -> {
 			return (double)FMC.OPTIONS.crosshairColor.getGreen();
 		},
@@ -115,7 +138,7 @@ public class FMCOptions
 		}
 	);
 
-	public static final DoubleOption CROSSHAIR_BLUE_COMPONENT = new DoubleOption("nope", 0.0D, 255.0D, 1.0F,
+	public static final DoubleOption CROSSHAIR_BLUE_COMPONENT = new DoubleOption("nope", 0.0d, 255.0d, 1.0f,
 		(gameOptions) -> {
 			return (double)FMC.OPTIONS.crosshairColor.getBlue();
 		},
@@ -127,7 +150,7 @@ public class FMCOptions
 		}
 	);
 
-	public static final DoubleOption CROSSHAIR_SCALE = new DoubleOption("nope", 0.0D, 2.0D, 0.01F,
+	public static final DoubleOption CROSSHAIR_SCALE = new DoubleOption("nope", 0.0d, 2.0d, 0.01f,
 		(gameOptions) -> {
 			return FMC.OPTIONS.crosshairScale;
 		},
@@ -147,6 +170,61 @@ public class FMCOptions
 			return new LiteralText("FMC Button Position: " + FMC.OPTIONS.buttonPosition);
 		}
 	);
+
+	//endregion
+
+	//region ENUMS
+
+	public enum NoToolBreakingMode
+	{
+		DISABLED(0, "Disabled"), PREVENT(1, "Prevent"), WARNING(2, "Warning");
+
+		private static final NoToolBreakingMode[] NO_TOOL_BREAKING_MODES = (NoToolBreakingMode[]) Arrays.stream(values()).sorted(Comparator.comparingInt(NoToolBreakingMode::getId)).toArray((i) -> {
+			return new NoToolBreakingMode[i];
+		});
+
+		private String mode;
+		private int id;
+
+		private NoToolBreakingMode(int id, String mode)
+		{
+			this.mode = mode;
+			this.id = id;
+		}
+
+		public static NoToolBreakingMode getOption(int id)
+		{
+			return NO_TOOL_BREAKING_MODES[MathHelper.floorMod(id, NO_TOOL_BREAKING_MODES.length)];
+		}
+
+		@Override
+		public String toString()
+		{
+			return mode;
+		}
+
+		public int getId()
+		{
+			return id;
+		}
+
+		public static NoToolBreakingMode match(String m)
+		{
+			switch(m) {
+				case "Disabled":
+					return NoToolBreakingMode.DISABLED;
+
+				case "Prevent":
+					return NoToolBreakingMode.PREVENT;
+
+				case "Warning":
+					return NoToolBreakingMode.WARNING;
+
+				default:
+					return null;
+			}
+		}
+	}
 
 	public enum ButtonPosition
 	{
@@ -208,10 +286,12 @@ public class FMCOptions
 			printWriter.println("crosshairScale:" + BigDecimal.valueOf(this.crosshairScale).setScale(2, RoundingMode.HALF_UP));
 			printWriter.println("crosshairColor:" + this.crosshairColor.getPacked());
 			printWriter.println("disableWToSprint:" + this.disableWToSprint);
-			printWriter.println("showDeathCoordinates:" + this.showDeathCoordinates);
+			printWriter.println("sendDeathCoordinates:" + this.sendDeathCoordinates);
 			printWriter.println("verticalCoordinates:" + this.verticalCoordinates);
 			printWriter.println("showHUDInfo:" + this.showHUDInfo);
 			printWriter.println("noToolBreaking:" + this.noToolBreaking);
+			printWriter.println("toolBreakingWarningScale:" + BigDecimal.valueOf(this.toolBreakingWarningScale).setScale(2, RoundingMode.HALF_UP));
+			printWriter.println("upperToolBreakingWarning:" + this.upperToolBreakingWarning);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -253,7 +333,7 @@ public class FMCOptions
 					
 					case "crosshairScale":
 						try {
-							this.crosshairScale = MathHelper.clamp(Double.parseDouble(value), 0.0D, 2.0D);
+							this.crosshairScale = MathHelper.clamp(Double.parseDouble(value), 0.0d, 2.0d);
 						}
 						catch(NumberFormatException e) {
 							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
@@ -275,8 +355,8 @@ public class FMCOptions
 						this.disableWToSprint = "true".equalsIgnoreCase(value);
 						break;
 					
-					case "showDeathCoordinates":
-						this.showDeathCoordinates = "true".equalsIgnoreCase(value);
+					case "sendDeathCoordinates":
+						this.sendDeathCoordinates = "true".equalsIgnoreCase(value);
 						break;
 
 					case "verticalCoordinates":
@@ -288,7 +368,29 @@ public class FMCOptions
 						break;
 
 					case "noToolBreaking":
-						this.noToolBreaking = "true".equalsIgnoreCase(value);
+						NoToolBreakingMode tBM = NoToolBreakingMode.match(value);
+
+						if(tBM != null) {
+							this.noToolBreaking = tBM;
+						}
+						else {
+							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
+						}
+
+						break;
+
+					case "toolBreakingTextScale":
+						try {
+							this.toolBreakingWarningScale = MathHelper.clamp(Double.parseDouble(value), 1.0d, 4.0d);
+						}
+						catch(NumberFormatException e) {
+							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
+						}
+
+						break;
+
+					case "upperToolBreakingWarning":
+						this.upperToolBreakingWarning = "true".equalsIgnoreCase(value);
 						break;
 				}
 			});
@@ -301,12 +403,14 @@ public class FMCOptions
 	private void loadDefaults()
 	{
 		this.buttonPosition = ButtonPosition.RIGHT;
-		this.crosshairScale = 1.0D;
+		this.crosshairScale = 1.0d;
 		this.crosshairColor = new Color(255, 255, 255);
 		this.disableWToSprint = true;
-		this.showDeathCoordinates = true;
+		this.sendDeathCoordinates = true;
 		this.verticalCoordinates = false;
 		this.showHUDInfo = true;
-		this.noToolBreaking = false;
+		this.noToolBreaking = NoToolBreakingMode.DISABLED;
+		this.toolBreakingWarningScale = 1.5d;
+		this.upperToolBreakingWarning = true;
 	}
 }

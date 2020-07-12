@@ -1,7 +1,6 @@
 package flour.fmc;
 
 import flour.fmc.options.FMCOptions;
-import flour.fmc.utils.OnScreenText;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
 
@@ -17,7 +16,7 @@ public class FMC implements ModInitializer
 	private String deathWorld;
 	public boolean isAfterDeath;
 
-	private OnScreenText oscText;
+	public int toolWarningTextTicksLeft;
 
 	@Override
 	public void onInitialize()
@@ -31,13 +30,13 @@ public class FMC implements ModInitializer
 		this.Z = 0.0D;
 		this.deathWorld = "";
 		this.isAfterDeath = false;
-
-		this.oscText = new OnScreenText();
+		this.toolWarningTextTicksLeft = 0;
 	}
 
-	public OnScreenText getOnScreenText()
+	public void defaultToolWarningTicks()
 	{
-		return oscText;
+		// three seconds
+		toolWarningTextTicksLeft = 60;
 	}
 
 	public void setLastDeathCoordinates(double X, double Y, double Z, String world)

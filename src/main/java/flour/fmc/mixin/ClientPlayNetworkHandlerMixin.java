@@ -15,10 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientPlayNetworkHandlerMixin
 {
 	@Inject(method = "onCombatEvent", at = @At("HEAD"))
-	private void beforeDeath(CombatEventS2CPacket packet, CallbackInfo info)
+	private void onOnCombatEvent(CombatEventS2CPacket packet, CallbackInfo info)
 	{
 		if(packet.type == CombatEventS2CPacket.Type.ENTITY_DIED) {
 			Entity entity = FMC.MC.world.getEntityById(packet.entityId);
+			
 			if(entity == FMC.MC.player) {
 				FMC.INSTANCE.setLastDeathCoordinates(FMC.MC.player.getX(), FMC.MC.player.getY(), FMC.MC.player.getZ(), FMC.MC.player.clientWorld.getRegistryKey().getValue().toString().split(":")[1].replace('_', ' '));
 				FMC.INSTANCE.isAfterDeath = true;
