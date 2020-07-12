@@ -38,6 +38,16 @@ Sends your last death coordinates in chat after you respawn (only visible to you
 
 Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick. This is disabled by default as it can break the vanilla experience.
 
+## Preview
+
+Custom resource pack crosshair and static green color, HUD info.
+
+![hud](https://user-images.githubusercontent.com/33128006/87231745-16148b80-c3ba-11ea-9e47-60b743a6db51.png)
+
+Ingame menu (with default settings)
+
+![menu](https://user-images.githubusercontent.com/33128006/87231884-0e091b80-c3bb-11ea-8a74-e538807fea9e.png)
+
 ----
 
 If you have any suggestions you can email me at: you@flourick.me
