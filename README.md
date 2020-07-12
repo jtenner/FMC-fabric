@@ -36,7 +36,15 @@ Sends your last death coordinates in chat after you respawn (only visible to you
 
 ### No Tool Breaking
 
-Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick. This is disabled by default as it can break the vanilla experience.
+This is disabled by default as it can break the vanilla experience. Has two modes:
+
+#### 1) Warning only
+
+When your tools go below 3% durability a red warning text appears on your screen for three seconds. Can be either on top of the screen or above the hotbar.
+
+#### 2) Prevent breaking
+
+Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
 
 ## Preview
 
