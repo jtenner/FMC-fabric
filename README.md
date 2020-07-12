@@ -44,7 +44,7 @@ Static crosshair color, HUD info, death message & tool breaking warning.
 
 ![hud](https://user-images.githubusercontent.com/33128006/87247992-50803600-c457-11ea-88fe-c4cc4dea2f4b.png)
 
-Ingame menu (with default settings)
+Ingame menu (default settings)
 
 ![menu](https://user-images.githubusercontent.com/33128006/87247991-4f4f0900-c457-11ea-98eb-3486ce7ceaa4.png)
 
