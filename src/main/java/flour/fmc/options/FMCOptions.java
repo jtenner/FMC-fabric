@@ -36,6 +36,7 @@ public class FMCOptions
 	}
 
 	public ButtonPosition buttonPosition;
+	public boolean crosshairStaticColor;
 	public Color crosshairColor;
 	public double crosshairScale;
 	public boolean disableWToSprint;
@@ -162,6 +163,15 @@ public class FMCOptions
 		}
 	);
 
+	public static final MyCyclingOption CROSSHAIR_STATIC_COLOR = new MyCyclingOption(
+		(gameOptions, integer) -> {
+			FMC.OPTIONS.crosshairStaticColor = !FMC.OPTIONS.crosshairStaticColor;
+		},
+		(gameOptions, cyclingOption) -> {
+			return new LiteralText("Crosshair Static Color: " + (FMC.OPTIONS.crosshairStaticColor ? "ON" : "OFF"));
+		}
+	);
+
 	public static final MyCyclingOption BUTTON_POSITION = new MyCyclingOption(
 		(gameOptions, integer) -> {
 			FMC.OPTIONS.buttonPosition = ButtonPosition.getOption(FMC.OPTIONS.buttonPosition.getId() + integer);
@@ -283,6 +293,7 @@ public class FMCOptions
 	{
 		try(PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(optionsFile), StandardCharsets.UTF_8));) {
 			printWriter.println("buttonPosition:" + this.buttonPosition);
+			printWriter.println("crosshairStaticColor:" + this.crosshairStaticColor);
 			printWriter.println("crosshairScale:" + BigDecimal.valueOf(this.crosshairScale).setScale(2, RoundingMode.HALF_UP));
 			printWriter.println("crosshairColor:" + this.crosshairColor.getPacked());
 			printWriter.println("disableWToSprint:" + this.disableWToSprint);
@@ -331,6 +342,10 @@ public class FMCOptions
 
 						break;
 					
+					case "crosshairStaticColor":
+						this.crosshairStaticColor = "true".equalsIgnoreCase(value);
+						break;
+
 					case "crosshairScale":
 						try {
 							this.crosshairScale = MathHelper.clamp(Double.parseDouble(value), 0.0d, 2.0d);
@@ -403,6 +418,7 @@ public class FMCOptions
 	private void loadDefaults()
 	{
 		this.buttonPosition = ButtonPosition.RIGHT;
+		this.crosshairStaticColor = true;
 		this.crosshairScale = 1.0d;
 		this.crosshairColor = new Color(255, 255, 255);
 		this.disableWToSprint = true;

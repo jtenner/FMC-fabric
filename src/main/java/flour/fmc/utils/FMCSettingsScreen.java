@@ -25,7 +25,8 @@ public class FMCSettingsScreen extends GameOptionsScreen
 	protected void init()
 	{
 		this.list = new ButtonListWidget(this.client, this.width, this.height, 32, this.height - 32, 25);
-		this.list.addAll(new Option[] {FMCOptions.BUTTON_POSITION, FMCOptions.CROSSHAIR_SCALE});
+		this.list.addSingleOptionEntry(FMCOptions.BUTTON_POSITION);
+		this.list.addAll(new Option[] {FMCOptions.CROSSHAIR_STATIC_COLOR, FMCOptions.CROSSHAIR_SCALE});
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_RED_COMPONENT);
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_GREEN_COMPONENT);
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_BLUE_COMPONENT);

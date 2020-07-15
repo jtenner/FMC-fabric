@@ -12,11 +12,11 @@ Vanilla enhancements fabric mod
 
 ## Features
 
-List of main features. Everything is configurable in ingame options menu called 'FMC...'
+List of main features. Everything is configurable in in-game options menu called 'FMC...'
 
 ### Crosshair
 
-This mod disables crosshair changing it's color based on background and instead let's you choose the static color yourself. You can also set the scale of the crosshair.
+This disables crosshair changing it's color based on background and instead let's you choose the static color yourself. You can also set the scale of the crosshair. You can still scale the crosshair even if you don't use the static color feature.
 
 If you use a crosshair from a resource pack that is already colored or you wish to have a crosshair that has multiple colors, set the color to white which will make it so only colors from the resource pack are used.
 
@@ -46,7 +46,7 @@ When your tools go below 3% durability a red warning text appears on your screen
 
 Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
 
-## Preview
+## Preview (v1.1.2)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 

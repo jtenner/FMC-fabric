@@ -87,9 +87,16 @@ public class InGameHudMixin extends DrawableHelper
 			else {
 				RenderSystem.pushMatrix();
 				RenderSystem.translatef((float)(scaledWidth / 2), (float)(scaledHeight / 2), (float)this.getZOffset());
+
 				RenderSystem.enableBlend();
-				RenderSystem.blendColor(FMC.OPTIONS.crosshairColor.getNormRed(), FMC.OPTIONS.crosshairColor.getNormGreen(), FMC.OPTIONS.crosshairColor.getNormBlue(), FMC.OPTIONS.crosshairColor.getNormAlpha());
-				RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.CONSTANT_COLOR, GlStateManager.DstFactor.ZERO, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+				if(FMC.OPTIONS.crosshairStaticColor) {
+					RenderSystem.blendColor(FMC.OPTIONS.crosshairColor.getNormRed(), FMC.OPTIONS.crosshairColor.getNormGreen(), FMC.OPTIONS.crosshairColor.getNormBlue(), FMC.OPTIONS.crosshairColor.getNormAlpha());
+					RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.CONSTANT_COLOR, GlStateManager.DstFactor.ZERO, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+				}
+				else {
+					RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+				}
+				
 				RenderSystem.scaled(FMC.OPTIONS.crosshairScale, FMC.OPTIONS.crosshairScale, 1.0d);
 				this.drawTexture(matrixStack, -15/2, -15/2, 0, 0, 15, 15);
 				RenderSystem.disableBlend();
