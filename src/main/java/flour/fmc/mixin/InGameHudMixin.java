@@ -41,7 +41,7 @@ public class InGameHudMixin extends DrawableHelper
 	{
 		// renders on screen text only if not in debug or hud is hidden or if options don't say so
 		if(this.client.options.debugEnabled || this.client.options.hudHidden || !FMC.OPTIONS.showHUDInfo) {
-			return;	
+			return;
 		}
 
 		// HUD info moves to the top if chat is open
@@ -57,11 +57,11 @@ public class InGameHudMixin extends DrawableHelper
 		}
 
 		if(FMC.INSTANCE.toolWarningTextTicksLeft > 0) {
-			RenderSystem.pushMatrix();
+			matrixStack.push();
 			RenderSystem.translatef((float)(this.client.getWindow().getScaledWidth() / 2), (float)(this.client.getWindow().getScaledHeight() / 2), (float)this.getZOffset());
 			RenderSystem.scaled(FMC.OPTIONS.toolBreakingWarningScale, FMC.OPTIONS.toolBreakingWarningScale, 1.0d);
 			OnScreenText.drawToolWarningText(matrixStack);
-			RenderSystem.popMatrix();
+			matrixStack.pop();
 		}
 	}
 
@@ -80,7 +80,6 @@ public class InGameHudMixin extends DrawableHelper
 				Camera camera = this.client.gameRenderer.getCamera();
 				RenderSystem.rotatef(camera.getPitch(), -1.0F, 0.0F, 0.0F);
 				RenderSystem.rotatef(camera.getYaw(), 0.0F, 1.0F, 0.0F);
-				RenderSystem.popMatrix();
 				RenderSystem.renderCrosshair(10);
 				RenderSystem.popMatrix();
 			}
