@@ -46,7 +46,7 @@ When your tools go below 3% durability a red warning text appears on your screen
 
 Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
 
-## Preview (v1.1.2)
+## Preview (v1.1.3)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 
@@ -54,7 +54,7 @@ Static crosshair color, HUD info, death message & tool breaking warning.
 
 Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/87247991-4f4f0900-c457-11ea-98eb-3486ce7ceaa4.png)
+![menu](https://user-images.githubusercontent.com/33128006/87874349-6a76c700-c9c9-11ea-89e3-a53220d62af4.png)
 
 ----
 
