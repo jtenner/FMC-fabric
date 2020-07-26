@@ -46,7 +46,7 @@ When your tools go below 3% durability a red warning text appears on your screen
 
 Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
 
-### Cloud height
+### Cloud Height
 
 Allows you to set the height at which clouds render (0 - 256)
 

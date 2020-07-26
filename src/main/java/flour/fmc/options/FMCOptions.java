@@ -58,7 +58,7 @@ public class FMCOptions
 			FMC.OPTIONS.cloudHeight = height;
 		},
 		(gameOptions, doubleOption) -> {
-			return new LiteralText("Cloud height: " + BigDecimal.valueOf(FMC.OPTIONS.cloudHeight).setScale(0, RoundingMode.HALF_UP));
+			return new LiteralText("Cloud Height: " + BigDecimal.valueOf(FMC.OPTIONS.cloudHeight).setScale(0, RoundingMode.HALF_UP));
 		}
 	);
 
