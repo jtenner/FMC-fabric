@@ -10,7 +10,8 @@
 		"ClientPlayerEntityMixin",
 		"ClientPlayNetworkHandlerMixin",
 		"OptionsScreenMixin",
-		"ClientPlayerInteractionManagerMixin"
+		"ClientPlayerInteractionManagerMixin",
+		"SkyPropertiesMixin"
 	],
 		"injectors": {
 		"defaultRequire": 1

@@ -46,8 +46,21 @@ public class FMCOptions
 	public NoToolBreakingMode noToolBreaking;
 	public double toolBreakingWarningScale;
 	public boolean upperToolBreakingWarning;
+	public double cloudHeight;
 
 	//region OPTIONS
+
+	public static final DoubleOption CLOUD_HEIGHT = new DoubleOption("nope", 0.0d, 256.0d, 1.0f,
+		(gameOptions) -> {
+			return FMC.OPTIONS.cloudHeight;
+		},
+		(gameOptions, height) -> {
+			FMC.OPTIONS.cloudHeight = height;
+		},
+		(gameOptions, doubleOption) -> {
+			return new LiteralText("Cloud height: " + BigDecimal.valueOf(FMC.OPTIONS.cloudHeight).setScale(0, RoundingMode.HALF_UP));
+		}
+	);
 
 	public static final MyCyclingOption UPPER_TOOL_BREAKING_WARNING = new MyCyclingOption(
 		(gameOptions, integer) -> {
@@ -303,6 +316,7 @@ public class FMCOptions
 			printWriter.println("noToolBreaking:" + this.noToolBreaking);
 			printWriter.println("toolBreakingWarningScale:" + BigDecimal.valueOf(this.toolBreakingWarningScale).setScale(2, RoundingMode.HALF_UP));
 			printWriter.println("upperToolBreakingWarning:" + this.upperToolBreakingWarning);
+			printWriter.println("cloudHeight:" + this.cloudHeight);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -407,6 +421,15 @@ public class FMCOptions
 					case "upperToolBreakingWarning":
 						this.upperToolBreakingWarning = "true".equalsIgnoreCase(value);
 						break;
+
+					case "cloudHeight":
+						try {
+							this.cloudHeight = MathHelper.clamp(Double.parseDouble(value), 0.0d, 256.0d);
+						}
+						catch(NumberFormatException e) {
+							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
+						}
+						break;
 				}
 			});
 		}
@@ -428,5 +451,6 @@ public class FMCOptions
 		this.noToolBreaking = NoToolBreakingMode.DISABLED;
 		this.toolBreakingWarningScale = 1.5d;
 		this.upperToolBreakingWarning = true;
+		this.cloudHeight = 128;
 	}
 }
