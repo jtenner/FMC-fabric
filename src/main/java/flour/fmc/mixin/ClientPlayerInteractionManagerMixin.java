@@ -18,6 +18,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,10 +27,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin
 {
+	@Shadow
+	private void syncSelectedSlot() {};
+
 	@Inject(method = "interactItem", at = @At("HEAD"), cancellable = true)
 	public void onInteractItem(CallbackInfoReturnable<ActionResult> info)
 	{
 		//System.out.println("Interact item!");
+		this.syncSelectedSlot();
 
 		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
@@ -113,6 +118,7 @@ public class ClientPlayerInteractionManagerMixin
 	public void onInteractBlock(CallbackInfoReturnable<ActionResult> info)
 	{
 		//System.out.println("Interact block!");
+		this.syncSelectedSlot();
 
 		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
@@ -272,6 +278,7 @@ public class ClientPlayerInteractionManagerMixin
 	public void onAttackEntity(CallbackInfo info)
 	{
 		//System.out.println("Attack entity!");
+		this.syncSelectedSlot();
 
 		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
@@ -316,6 +323,7 @@ public class ClientPlayerInteractionManagerMixin
 	public void onInteractEntity(CallbackInfoReturnable<ActionResult> info)
 	{
 		//System.out.println("Interact entity!");
+		this.syncSelectedSlot();
 
 		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
@@ -359,6 +367,7 @@ public class ClientPlayerInteractionManagerMixin
 	public void onInteractEntityAtLocation(CallbackInfoReturnable<ActionResult> info)
 	{
 		//System.out.println("Interact entity at location!");
+		this.syncSelectedSlot();
 
 		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
