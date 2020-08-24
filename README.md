@@ -34,31 +34,31 @@ The header says it all. Gets rid of one of the most annoying features.
 
 Sends your last death coordinates in chat after you respawn (only visible to you).
 
-### No Tool Breaking
+### Tool Breaking
 
-This is disabled by default as it can break the vanilla experience. Has two modes:
+Has two independent modes:
 
 #### 1) Warning
 
-When your tools go below 3% durability a red warning text appears on your screen for three seconds. Can be either on top of the screen or above the hotbar.
+When your tools go below 10% durability and have 12 or less uses a red warning text appears on your screen for three seconds. Can be either on top of the screen or above the hotbar. Text size can be changed in settings.
 
 #### 2) Prevent breaking
 
-Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
+This is disabled by default as it can break the vanilla experience. Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
 
 ### Cloud Height
 
 Allows you to set the height at which clouds render (0 - 256)
 
-## Preview (v1.1.4)
+## Preview (v1.1.5)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 
-![hud](https://user-images.githubusercontent.com/33128006/87247992-50803600-c457-11ea-88fe-c4cc4dea2f4b.png)
+![hud](https://user-images.githubusercontent.com/33128006/91038667-70387b80-e60b-11ea-9ee0-2e28d4d7d6f2.png)
 
 Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/88480912-08820880-cf59-11ea-82ef-c64768f9dbbc.png)
+![menu](https://user-images.githubusercontent.com/33128006/91038699-7cbcd400-e60b-11ea-8a37-7998e7525345.png)
 
 ----
 
