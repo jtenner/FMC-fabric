@@ -11,7 +11,8 @@
 		"ClientPlayNetworkHandlerMixin",
 		"OptionsScreenMixin",
 		"ClientPlayerInteractionManagerMixin",
-		"SkyPropertiesMixin"
+		"SkyPropertiesMixin",
+		"LightmapTextureManagerMixin"
 	],
 		"injectors": {
 		"defaultRequire": 1

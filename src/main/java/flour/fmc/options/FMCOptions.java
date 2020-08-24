@@ -48,8 +48,18 @@ public class FMCOptions
 	public double toolBreakingWarningScale;
 	public boolean upperToolBreakingWarning;
 	public double cloudHeight;
+	public boolean fullbright;
 
 	//region OPTIONS
+
+	public static final MyBooleanOption FULLBRIGHT = new MyBooleanOption("Fullbright",
+		(gameOptions) -> {
+			return FMC.OPTIONS.fullbright;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.fullbright = bool;
+		}
+	);
 
 	public static final DoubleOption CLOUD_HEIGHT = new DoubleOption("nope", 0.0d, 256.0d, 1.0f,
 		(gameOptions) -> {
@@ -277,6 +287,7 @@ public class FMCOptions
 			printWriter.println("toolBreakingWarningScale:" + BigDecimal.valueOf(this.toolBreakingWarningScale).setScale(2, RoundingMode.HALF_UP));
 			printWriter.println("upperToolBreakingWarning:" + this.upperToolBreakingWarning);
 			printWriter.println("cloudHeight:" + this.cloudHeight);
+			printWriter.println("fullbright:" + this.fullbright);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -386,6 +397,10 @@ public class FMCOptions
 							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
 						}
 						break;
+
+					case "fullbright":
+						this.fullbright = "true".equalsIgnoreCase(value);
+						break;
 				}
 			});
 		}
@@ -409,5 +424,6 @@ public class FMCOptions
 		this.toolBreakingWarningScale = 1.5d;
 		this.upperToolBreakingWarning = false;
 		this.cloudHeight = 128;
+		this.fullbright = false;
 	}
 }
