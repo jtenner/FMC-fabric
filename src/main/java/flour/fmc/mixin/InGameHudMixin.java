@@ -31,9 +31,7 @@ public class InGameHudMixin extends DrawableHelper
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void onTick(CallbackInfo info)
 	{
-		if(FMC.INSTANCE.toolWarningTextTicksLeft > 0) {
-			FMC.INSTANCE.toolWarningTextTicksLeft -= 1;
-		}
+		FMC.VARS.tickToolWarningTicks();
 	}
 
 	@Inject(method = "render", at = @At("HEAD"))
@@ -56,7 +54,7 @@ public class InGameHudMixin extends DrawableHelper
 			OnScreenText.drawPFTextLower(matrixStack);
 		}
 
-		if(FMC.INSTANCE.toolWarningTextTicksLeft > 0) {
+		if(FMC.VARS.getToolWarningTextTicksLeft() > 0) {
 			matrixStack.push();
 			matrixStack.translate((double)(this.client.getWindow().getScaledWidth() / 2.0d), (double)(this.client.getWindow().getScaledHeight() / 2.0d), (double)this.getZOffset());
 			matrixStack.scale((float)FMC.OPTIONS.toolBreakingWarningScale, (float)FMC.OPTIONS.toolBreakingWarningScale, 1.0f);

@@ -21,8 +21,8 @@ public class ClientPlayNetworkHandlerMixin
 			Entity entity = FMC.MC.world.getEntityById(packet.entityId);
 			
 			if(entity == FMC.MC.player) {
-				FMC.INSTANCE.setLastDeathCoordinates(FMC.MC.player.getX(), FMC.MC.player.getY(), FMC.MC.player.getZ(), FMC.MC.player.clientWorld.getRegistryKey().getValue().toString().split(":")[1].replace('_', ' '));
-				FMC.INSTANCE.isAfterDeath = true;
+				FMC.VARS.setLastDeathCoordinates(FMC.MC.player.getX(), FMC.MC.player.getY(), FMC.MC.player.getZ(), FMC.MC.player.clientWorld.getRegistryKey().getValue().toString().split(":")[1].replace('_', ' '));
+				FMC.VARS.setIsAfterDeath(true);
 			}
 		}
 	}

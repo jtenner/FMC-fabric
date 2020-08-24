@@ -1,7 +1,7 @@
 package flour.fmc.mixin;
 
 import flour.fmc.FMC;
-import flour.fmc.options.FMCOptions.NoToolBreakingMode;
+
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
@@ -33,10 +33,43 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "interactItem", at = @At("HEAD"), cancellable = true)
 	public void onInteractItem(CallbackInfoReturnable<ActionResult> info)
 	{
-		//System.out.println("Interact item!");
+		if(FMC.DEBUG) {
+			System.out.println("Interact item!");
+		}
+
 		this.syncSelectedSlot();
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -96,31 +129,48 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-		}
 	}
 
 	@Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
 	public void onInteractBlock(CallbackInfoReturnable<ActionResult> info)
 	{
-		//System.out.println("Interact block!");
+		if(FMC.DEBUG) {
+			System.out.println("Interact block!");
+		}
+
 		this.syncSelectedSlot();
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -150,30 +200,46 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-		}
 	}
 
 	@Inject(method = "attackBlock", at = @At("HEAD"), cancellable = true)
 	public void onAttackBlock(CallbackInfoReturnable<Boolean> info)
 	{
-		//System.out.println("Attack block!");
+		if(FMC.DEBUG) {
+			System.out.println("Attack block!");
+		}
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -200,22 +266,6 @@ public class ClientPlayerInteractionManagerMixin
 					if(mainHandItem.getMaxDamage() - mainHandItem.getDamage() < 2) {
 						info.setReturnValue(false);
 					}
-				}
-			}
-		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
 				}
 			}
 		}
@@ -224,9 +274,41 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "breakBlock", at = @At("HEAD"), cancellable = true)
 	public void onBreakBlock(CallbackInfoReturnable<Boolean> info)
 	{
-		//System.out.println("Break block!");
+		if(FMC.DEBUG) {
+			System.out.println("Break block!");
+		}
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -256,31 +338,48 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-		}
 	}
 
 	@Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
 	public void onAttackEntity(CallbackInfo info)
 	{
-		//System.out.println("Attack entity!");
+		if(FMC.DEBUG) {
+			System.out.println("Attack entity!");
+		}
+
 		this.syncSelectedSlot();
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.toolWarning) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -301,31 +400,48 @@ public class ClientPlayerInteractionManagerMixin
 				}
 			}
 		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-		}
 	}
 
 	@Inject(method = "interactEntity", at = @At("HEAD"), cancellable = true)
 	public void onInteractEntity(CallbackInfoReturnable<ActionResult> info)
 	{
-		//System.out.println("Interact entity!");
+		if(FMC.DEBUG) {
+			System.out.println("Interact entity!");
+		}
+
 		this.syncSelectedSlot();
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -342,22 +458,6 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
 						info.setReturnValue(ActionResult.FAIL);
 					}
-				}
-			}
-		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
 				}
 			}
 		}
@@ -366,10 +466,43 @@ public class ClientPlayerInteractionManagerMixin
 	@Inject(method = "interactEntityAtLocation", at = @At("HEAD"), cancellable = true)
 	public void onInteractEntityAtLocation(CallbackInfoReturnable<ActionResult> info)
 	{
-		//System.out.println("Interact entity at location!");
+		if(FMC.DEBUG) {
+			System.out.println("Interact entity at location!");
+		}
+
 		this.syncSelectedSlot();
 
-		if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.PREVENT) {
+		if(FMC.OPTIONS.toolWarning) {
+			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
+			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
+
+			int mainHandDurability = Integer.MAX_VALUE;
+			int offHandDurability = Integer.MAX_VALUE;
+
+			if(mainHandItem != null && mainHandItem.isDamaged()) {
+				mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();
+
+				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
+					FMC.VARS.setToolDurability(mainHandDurability);
+					FMC.VARS.setToolHand(Hand.MAIN_HAND);
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+
+			if(offHandItem != null && offHandItem.isDamaged()) {
+				offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
+
+				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
+					if(offHandDurability < mainHandDurability) {
+						FMC.VARS.setToolDurability(offHandDurability);
+						FMC.VARS.setToolHand(Hand.OFF_HAND);
+					}
+					FMC.VARS.resetToolWarningTicks();
+				}
+			}
+		}
+
+		if(FMC.OPTIONS.noToolBreaking) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 
@@ -386,22 +519,6 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandItem.getMaxDamage() - offHandItem.getDamage() < 2) {
 						info.setReturnValue(ActionResult.FAIL);
 					}
-				}
-			}
-		}
-		else if(FMC.OPTIONS.noToolBreaking == NoToolBreakingMode.WARNING) {
-			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
-			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
-
-			if(mainHandItem != null && mainHandItem.isDamaged()) {
-				if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.97f) < mainHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
-				}
-			}
-
-			if(offHandItem != null && offHandItem.isDamaged()) {
-				if(MathHelper.floor(offHandItem.getMaxDamage() * 0.97f) < offHandItem.getDamage() + 1) {
-					FMC.INSTANCE.defaultToolWarningTicks();
 				}
 			}
 		}

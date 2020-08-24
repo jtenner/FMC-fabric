@@ -2,6 +2,7 @@ package flour.fmc.utils;
 
 import flour.fmc.FMC;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
 
@@ -78,7 +79,7 @@ public class OnScreenText
 	public static void drawToolWarningText(MatrixStack matrixStack)
 	{
 		// last half a second fade-out
-		int alpha = MathHelper.clamp(MathHelper.ceil(25.5f * FMC.INSTANCE.toolWarningTextTicksLeft), 0, 255);
+		int alpha = MathHelper.clamp(MathHelper.ceil(25.5f * FMC.VARS.getToolWarningTextTicksLeft()), 0, 255);
 
 		int y;
 		if(FMC.OPTIONS.upperToolBreakingWarning) {
@@ -88,7 +89,7 @@ public class OnScreenText
 			y = (int)(((FMC.MC.getWindow().getScaledHeight() / 2 * 1/FMC.OPTIONS.toolBreakingWarningScale)) - (FMC.MC.textRenderer.fontHeight + 60/FMC.OPTIONS.toolBreakingWarningScale));
 		}
 
-		final String ToolWarningText = "Tool durability below 3%!";
+		final String ToolWarningText = (FMC.VARS.getToolHand().equals(Hand.MAIN_HAND) ? "Main hand" : "Offhand") + " tool has " + FMC.VARS.getToolDurability() + " durability left!";
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, ToolWarningText, (float) -(FMC.MC.textRenderer.getWidth(ToolWarningText) / 2), y, new Color(alpha, 255, 0, 0).getPacked());
 	}
 }

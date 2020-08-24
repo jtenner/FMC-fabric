@@ -38,7 +38,7 @@ Sends your last death coordinates in chat after you respawn (only visible to you
 
 This is disabled by default as it can break the vanilla experience. Has two modes:
 
-#### 1) Warning only
+#### 1) Warning
 
 When your tools go below 3% durability a red warning text appears on your screen for three seconds. Can be either on top of the screen or above the hotbar.
 

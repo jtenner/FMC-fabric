@@ -31,9 +31,9 @@ public class ClientPlayerEntityMixin
 	@Inject(method = "setShowsDeathScreen", at = @At("HEAD"))
 	private void onSetShowsDeathScreen(CallbackInfo info)
 	{
-		if(FMC.INSTANCE.isAfterDeath && FMC.OPTIONS.sendDeathCoordinates) {
-			FMC.INSTANCE.isAfterDeath = false;
-			FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText(String.format("You died at X: %.01f Z: %.01f Y: %.01f in %s!", FMC.INSTANCE.getLastDeathX(), FMC.INSTANCE.getLastDeathZ(), FMC.INSTANCE.getLastDeathY(), FMC.INSTANCE.getLastDeathWorld())), UUID.fromString("00000000-0000-0000-0000-000000000000"));
+		if(FMC.VARS.getIsAfterDeath() && FMC.OPTIONS.sendDeathCoordinates) {
+			FMC.VARS.setIsAfterDeath(false);
+			FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText(String.format("You died at X: %.01f Z: %.01f Y: %.01f in %s!", FMC.VARS.getLastDeathX(), FMC.VARS.getLastDeathZ(), FMC.VARS.getLastDeathY(), FMC.VARS.getLastDeathWorld())), UUID.fromString("00000000-0000-0000-0000-000000000000"));
 		}
 	}
 }
