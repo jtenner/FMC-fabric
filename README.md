@@ -4,7 +4,7 @@ Vanilla enhancements fabric mod
 
 ## Installation
 
-1. Download fabric loader from [here](https://fabricmc.net/use/) (does not require Fabric-API, loader is enough)
+1. Download fabric loader from [here](https://fabricmc.net/use/) (**REQUIRES** Fabric-API! Get it [here](https://www.curseforge.com/minecraft/mc-mods/fabric-api))
 
 2. Download latest FMC-fabric release from [here](https://github.com/Flourick/FMC-fabric/releases).
 
@@ -12,7 +12,7 @@ Vanilla enhancements fabric mod
 
 ## Features
 
-List of main features. Everything is configurable in in-game options menu called 'FMC...'
+List of main features. Everything is configurable in in-game options menu called 'FMC...'. Keybindings are configured in the usual Controls menu (FMC category).
 
 ### Crosshair
 
@@ -49,6 +49,10 @@ This is disabled by default as it can break the vanilla experience. Makes your t
 ### Cloud Height
 
 Allows you to set the height at which clouds render (0 - 256)
+
+### Fullbright
+
+Self-explanatory. Useful for caving and in Nether. Default keybind is *'r'*.
 
 ## Preview (v1.1.5)
 

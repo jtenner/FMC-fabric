@@ -11,16 +11,16 @@ public class OnScreenText
 	public static void drawCoordinatesTextLower(MatrixStack matrixStack)
 	{
 		if(FMC.OPTIONS.verticalCoordinates) {
-			final String X = String.format("X: %.01f", FMC.MC.player.getX());
-			final String Z = String.format("Z: %.01f", FMC.MC.player.getZ());
+			final String X = String.format("X: %.01f", FMC.MC.player.getX());	
 			final String Y = String.format("Y: %.01f", FMC.MC.player.getY());
+			final String Z = String.format("Z: %.01f", FMC.MC.player.getZ());
 
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, X, 2, FMC.MC.getWindow().getScaledHeight() - 3*FMC.MC.textRenderer.fontHeight - 2, Color.WHITE.getPacked());
-			FMC.MC.textRenderer.drawWithShadow(matrixStack, Z, 2, FMC.MC.getWindow().getScaledHeight() - 2*FMC.MC.textRenderer.fontHeight - 1, Color.WHITE.getPacked());
-			FMC.MC.textRenderer.drawWithShadow(matrixStack, Y, 2, FMC.MC.getWindow().getScaledHeight() - FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
+			FMC.MC.textRenderer.drawWithShadow(matrixStack, Y, 2, FMC.MC.getWindow().getScaledHeight() - 2*FMC.MC.textRenderer.fontHeight - 1, Color.WHITE.getPacked());
+			FMC.MC.textRenderer.drawWithShadow(matrixStack, Z, 2, FMC.MC.getWindow().getScaledHeight() - FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
 		}
 		else {
-			final String curLocText = String.format("X: %.01f Z: %.01f Y: %.01f", FMC.MC.player.getX(), FMC.MC.player.getZ(), FMC.MC.player.getY());
+			final String curLocText = String.format("XYZ: %.01f %.01f %.01f", FMC.MC.player.getX(), FMC.MC.player.getY(), FMC.MC.player.getZ());
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, curLocText, 2, FMC.MC.getWindow().getScaledHeight() - FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
 		}
 	}
@@ -28,16 +28,16 @@ public class OnScreenText
 	public static void drawCoordinatesTextUpper(MatrixStack matrixStack)
 	{
 		if(FMC.OPTIONS.verticalCoordinates) {
-			final String X = String.format("X: %.01f", FMC.MC.player.getX());
-			final String Z = String.format("Z: %.01f", FMC.MC.player.getZ());
+			final String X = String.format("X: %.01f", FMC.MC.player.getX());		
 			final String Y = String.format("Y: %.01f", FMC.MC.player.getY());
+			final String Z = String.format("Z: %.01f", FMC.MC.player.getZ());
 
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, X, 2, 2, Color.WHITE.getPacked());
-			FMC.MC.textRenderer.drawWithShadow(matrixStack, Z, 2, 3 + FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
-			FMC.MC.textRenderer.drawWithShadow(matrixStack, Y, 2, 4 + 2*FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
+			FMC.MC.textRenderer.drawWithShadow(matrixStack, Y, 2, 3 + FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
+			FMC.MC.textRenderer.drawWithShadow(matrixStack, Z, 2, 4 + 2*FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
 		}
 		else {
-			final String curLocText = String.format("X: %.01f Z: %.01f Y: %.01f", FMC.MC.player.getX(), FMC.MC.player.getZ(), FMC.MC.player.getY());
+			final String curLocText = String.format("XYZ: %.01f %.01f %.01f", FMC.MC.player.getX(), FMC.MC.player.getY(), FMC.MC.player.getZ());
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, curLocText, 2, 2, Color.WHITE.getPacked());
 		}
 	}

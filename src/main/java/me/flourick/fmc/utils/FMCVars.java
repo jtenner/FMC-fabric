@@ -21,6 +21,7 @@ public class FMCVars
 		this.deathZ = 0;
 		this.deathWorld = "";
 		this.isAfterDeath = false;
+		
 		this.toolWarningTextTicksLeft = 0;
 		this.toolDurability = 0;
 		this.toolHand = Hand.MAIN_HAND;

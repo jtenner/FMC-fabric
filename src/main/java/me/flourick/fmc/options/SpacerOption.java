@@ -1,6 +1,7 @@
 package me.flourick.fmc.options;
 
 import me.flourick.fmc.FMC;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
