@@ -1,4 +1,4 @@
-package flour.fmc.utils;
+package me.flourick.fmc.utils;
 
 import net.minecraft.util.Hand;
 

@@ -1,4 +1,4 @@
-package flour.fmc.options;
+package me.flourick.fmc.options;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;

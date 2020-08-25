@@ -1,12 +1,12 @@
-package flour.fmc.mixin;
-
-import flour.fmc.FMC;
+package me.flourick.fmc.mixin;
 
 import net.minecraft.client.render.SkyProperties;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+
+import me.flourick.fmc.FMC;
 
 @Mixin(SkyProperties.class)
 public class SkyPropertiesMixin

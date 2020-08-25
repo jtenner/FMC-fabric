@@ -1,8 +1,8 @@
-package flour.fmc.utils;
+package me.flourick.fmc.utils;
 
-import flour.fmc.FMC;
-import flour.fmc.options.FMCOptions;
-import flour.fmc.options.SpacerOption;
+import me.flourick.fmc.FMC;
+import me.flourick.fmc.options.FMCOptions;
+import me.flourick.fmc.options.SpacerOption;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.screen.options.GameOptionsScreen;

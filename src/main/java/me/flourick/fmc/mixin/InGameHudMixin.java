@@ -1,7 +1,5 @@
-package flour.fmc.mixin;
+package me.flourick.fmc.mixin;
 
-import flour.fmc.FMC;
-import flour.fmc.utils.OnScreenText;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -21,6 +19,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import me.flourick.fmc.FMC;
+import me.flourick.fmc.utils.OnScreenText;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin extends DrawableHelper

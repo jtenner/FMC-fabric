@@ -1,8 +1,7 @@
-package flour.fmc;
+package me.flourick.fmc;
 
-import flour.fmc.options.FMCOptions;
-import flour.fmc.utils.FMCVars;
-
+import me.flourick.fmc.options.FMCOptions;
+import me.flourick.fmc.utils.FMCVars;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.MinecraftClient;

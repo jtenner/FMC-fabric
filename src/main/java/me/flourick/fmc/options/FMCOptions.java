@@ -1,7 +1,4 @@
-package flour.fmc.options;
-
-import flour.fmc.FMC;
-import flour.fmc.utils.Color;
+package me.flourick.fmc.options;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +17,8 @@ import com.google.common.io.Files;
 
 import org.apache.logging.log4j.LogManager;
 
+import me.flourick.fmc.FMC;
+import me.flourick.fmc.utils.Color;
 import net.minecraft.client.options.DoubleOption;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.MathHelper;

@@ -1,6 +1,6 @@
-package flour.fmc.options;
+package me.flourick.fmc.options;
 
-import flour.fmc.FMC;
+import me.flourick.fmc.FMC;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AbstractButtonWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;

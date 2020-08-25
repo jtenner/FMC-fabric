@@ -9,17 +9,16 @@
 		"Flourick"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/Flourick/FMC-fabric"
 	},
 
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/fmc/icon.png",
 	"environment": "*",
 
 	"entrypoints": {
 		"main": [
-			"flour.fmc.FMC"
+			"me.flourick.fmc.FMC"
 		]
 	},
 	"mixins": [

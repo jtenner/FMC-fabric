@@ -1,6 +1,4 @@
-package flour.fmc.mixin;
-
-import flour.fmc.FMC;
+package me.flourick.fmc.mixin;
 
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.MessageType;
@@ -13,6 +11,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import me.flourick.fmc.FMC;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin

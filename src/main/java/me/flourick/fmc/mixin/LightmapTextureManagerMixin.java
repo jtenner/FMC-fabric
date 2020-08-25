@@ -1,6 +1,4 @@
-package flour.fmc.mixin;
-
-import flour.fmc.FMC;
+package me.flourick.fmc.mixin;
 
 import net.minecraft.client.render.LightmapTextureManager;
 
@@ -8,6 +6,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import me.flourick.fmc.FMC;
 
 @Mixin(LightmapTextureManager.class)
 public class LightmapTextureManagerMixin

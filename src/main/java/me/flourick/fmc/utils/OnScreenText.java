@@ -1,6 +1,6 @@
-package flour.fmc.utils;
+package me.flourick.fmc.utils;
 
-import flour.fmc.FMC;
+import me.flourick.fmc.FMC;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;

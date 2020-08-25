@@ -1,8 +1,5 @@
-package flour.fmc.mixin;
+package me.flourick.fmc.mixin;
 
-import flour.fmc.FMC;
-
-import flour.fmc.utils.FMCSettingsScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.options.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -15,6 +12,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import me.flourick.fmc.FMC;
+import me.flourick.fmc.utils.FMCSettingsScreen;
 
 @Mixin(OptionsScreen.class)
 public class OptionsScreenMixin extends Screen
