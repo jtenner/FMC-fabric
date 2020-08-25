@@ -1,5 +1,14 @@
 package me.flourick.fmc.mixin;
 
+import me.flourick.fmc.FMC;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
@@ -15,15 +24,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import me.flourick.fmc.FMC;
-
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin
 {
@@ -31,7 +31,7 @@ public class ClientPlayerInteractionManagerMixin
 	private void syncSelectedSlot() {};
 
 	@Inject(method = "interactItem", at = @At("HEAD"), cancellable = true)
-	public void onInteractItem(CallbackInfoReturnable<ActionResult> info)
+	private void onInteractItem(CallbackInfoReturnable<ActionResult> info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Interact item!");
@@ -63,8 +63,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}
@@ -132,7 +132,7 @@ public class ClientPlayerInteractionManagerMixin
 	}
 
 	@Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
-	public void onInteractBlock(CallbackInfoReturnable<ActionResult> info)
+	private void onInteractBlock(CallbackInfoReturnable<ActionResult> info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Interact block!");
@@ -164,8 +164,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}
@@ -203,7 +203,7 @@ public class ClientPlayerInteractionManagerMixin
 	}
 
 	@Inject(method = "attackBlock", at = @At("HEAD"), cancellable = true)
-	public void onAttackBlock(CallbackInfoReturnable<Boolean> info)
+	private void onAttackBlock(CallbackInfoReturnable<Boolean> info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Attack block!");
@@ -233,8 +233,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}
@@ -272,7 +272,7 @@ public class ClientPlayerInteractionManagerMixin
 	}
 
 	@Inject(method = "breakBlock", at = @At("HEAD"), cancellable = true)
-	public void onBreakBlock(CallbackInfoReturnable<Boolean> info)
+	private void onBreakBlock(CallbackInfoReturnable<Boolean> info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Break block!");
@@ -302,8 +302,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}
@@ -341,7 +341,7 @@ public class ClientPlayerInteractionManagerMixin
 	}
 
 	@Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
-	public void onAttackEntity(CallbackInfo info)
+	private void onAttackEntity(CallbackInfo info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Attack entity!");
@@ -373,8 +373,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}
@@ -403,7 +403,7 @@ public class ClientPlayerInteractionManagerMixin
 	}
 
 	@Inject(method = "interactEntity", at = @At("HEAD"), cancellable = true)
-	public void onInteractEntity(CallbackInfoReturnable<ActionResult> info)
+	private void onInteractEntity(CallbackInfoReturnable<ActionResult> info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Interact entity!");
@@ -435,8 +435,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}
@@ -464,7 +464,7 @@ public class ClientPlayerInteractionManagerMixin
 	}
 
 	@Inject(method = "interactEntityAtLocation", at = @At("HEAD"), cancellable = true)
-	public void onInteractEntityAtLocation(CallbackInfoReturnable<ActionResult> info)
+	private void onInteractEntityAtLocation(CallbackInfoReturnable<ActionResult> info)
 	{
 		if(FMC.DEBUG) {
 			System.out.println("Interact entity at location!");
@@ -496,8 +496,8 @@ public class ClientPlayerInteractionManagerMixin
 					if(offHandDurability < mainHandDurability) {
 						FMC.VARS.setToolDurability(offHandDurability);
 						FMC.VARS.setToolHand(Hand.OFF_HAND);
+						FMC.VARS.resetToolWarningTicks();
 					}
-					FMC.VARS.resetToolWarningTicks();
 				}
 			}
 		}

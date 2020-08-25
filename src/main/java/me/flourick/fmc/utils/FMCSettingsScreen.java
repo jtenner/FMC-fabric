@@ -3,7 +3,7 @@ package me.flourick.fmc.utils;
 import me.flourick.fmc.FMC;
 import me.flourick.fmc.options.FMCOptions;
 import me.flourick.fmc.options.SpacerOption;
-
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.screen.options.GameOptionsScreen;
@@ -51,7 +51,7 @@ public class FMCSettingsScreen extends GameOptionsScreen
 	{
 		this.renderBackground(matrixStack);
 		this.list.render(matrixStack, mouseX, mouseY, delta);
-		this.drawCenteredString(matrixStack, this.textRenderer, this.title.asString(), this.width / 2, 12, 16777215);
+		DrawableHelper.drawCenteredString(matrixStack, this.textRenderer, this.title.asString(), this.width / 2, 12, 16777215);
 
 		super.render(matrixStack, mouseX, mouseY, delta);
 	}

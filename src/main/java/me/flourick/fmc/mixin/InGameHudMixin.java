@@ -72,7 +72,7 @@ public class InGameHudMixin extends DrawableHelper
 		int scaledWidth = this.client.getWindow().getScaledWidth();
 		int scaledHeight = this.client.getWindow().getScaledHeight();
 
-		if(gameOptions.perspective == 0) {
+		if(gameOptions.getPerspective().isFirstPerson()) {
 			if(gameOptions.debugEnabled && !gameOptions.hudHidden && !this.client.player.getReducedDebugInfo() && !gameOptions.reducedDebugInfo) {
 				RenderSystem.pushMatrix();
 				RenderSystem.translatef((float) (scaledWidth / 2), (float) (scaledHeight / 2), (float) this.getZOffset());
