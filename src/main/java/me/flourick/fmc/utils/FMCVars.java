@@ -1,5 +1,6 @@
 package me.flourick.fmc.utils;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
 public class FMCVars
@@ -12,6 +13,8 @@ public class FMCVars
 
 	private int toolWarningTextTicksLeft;
 	private int toolDurability;
+	private ItemStack mainHandToolItemStack;
+	private ItemStack offHandToolItemStack;
 	private Hand toolHand;
 
 	public FMCVars()
@@ -24,6 +27,8 @@ public class FMCVars
 		
 		this.toolWarningTextTicksLeft = 0;
 		this.toolDurability = 0;
+		this.mainHandToolItemStack = ItemStack.EMPTY;
+		this.offHandToolItemStack = ItemStack.EMPTY;
 		this.toolHand = Hand.MAIN_HAND;
 	}
 
@@ -72,7 +77,7 @@ public class FMCVars
 
 	public void resetToolWarningTicks()
 	{
-		toolWarningTextTicksLeft = 60;
+		toolWarningTextTicksLeft = 40;
 	}
 
 	public void tickToolWarningTicks()
@@ -101,4 +106,26 @@ public class FMCVars
 	{
 		this.toolHand = toolHand;
 	}
+
+	public ItemStack getMainHandToolItemStack()
+	{
+		return mainHandToolItemStack;
+	}
+
+	public void setMainHandToolItemStack(ItemStack mainHandToolItemStack)
+	{
+		this.mainHandToolItemStack = mainHandToolItemStack;
+	}
+
+	public ItemStack getOffHandToolItemStack()
+	{
+		return offHandToolItemStack;
+	}
+
+	public void setOffHandToolItemStack(ItemStack offHandToolItemStack)
+	{
+		this.offHandToolItemStack = offHandToolItemStack;
+	}
+
+	
 }

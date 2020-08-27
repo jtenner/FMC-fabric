@@ -51,7 +51,7 @@ public class FMCSettingsScreen extends GameOptionsScreen
 	{
 		this.renderBackground(matrixStack);
 		this.list.render(matrixStack, mouseX, mouseY, delta);
-		DrawableHelper.drawCenteredString(matrixStack, this.textRenderer, this.title.asString(), this.width / 2, 12, 16777215);
+		DrawableHelper.drawCenteredString(matrixStack, this.textRenderer, this.title.asString(), this.width / 2, 12, Color.WHITE.getPacked());
 
 		super.render(matrixStack, mouseX, mouseY, delta);
 	}

@@ -1,15 +1,5 @@
 package me.flourick.fmc.mixin;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.options.AttackIndicator;
-import net.minecraft.client.options.GameOptions;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -22,6 +12,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.flourick.fmc.FMC;
 import me.flourick.fmc.utils.OnScreenText;
+
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.options.AttackIndicator;
+import net.minecraft.client.options.GameOptions;
+import net.minecraft.client.render.Camera;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 
 @Mixin(InGameHud.class)
 public class InGameHudMixin extends DrawableHelper

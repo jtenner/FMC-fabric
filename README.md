@@ -1,6 +1,6 @@
 # FMC
 
-Vanilla enhancements fabric mod
+Vanilla enhancements fabric mod. Compatible with Sodium.
 
 ## Installation
 
@@ -40,11 +40,11 @@ Has two independent modes:
 
 #### 1) Warning
 
-When your tools go below 10% durability and have 12 or less uses a red warning text appears on your screen for three seconds. Can be either on top of the screen or above the hotbar. Text size can be changed in settings.
+When your tools go below 10% durability and have 12 or less uses a red warning text appears on your screen for two seconds. Can be either on top of the screen or above the hotbar. Text size can be changed in settings.
 
 #### 2) Prevent breaking
 
-This is disabled by default as it can break the vanilla experience. Makes your tools stop working at certain durability at certain tasks (ex. pickaxe won't break blocks at durability 1 and won't hit mobs at durability 2). This does NOT include any armor, shield and carrot on the stick.
+This is disabled by default as it can break the vanilla experience. Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow.
 
 ### Cloud Height
 

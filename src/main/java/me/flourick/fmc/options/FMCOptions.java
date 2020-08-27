@@ -374,7 +374,7 @@ public class FMCOptions
 						this.toolWarning = "true".equalsIgnoreCase(value);
 						break;
 
-					case "toolBreakingTextScale":
+					case "toolBreakingWarningScale":
 						try {
 							this.toolBreakingWarningScale = MathHelper.clamp(Double.parseDouble(value), 1.0d, 4.0d);
 						}

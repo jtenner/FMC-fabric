@@ -6,11 +6,11 @@
 	"mixins": [
 	],
 	"client": [
+		"MinecraftClientMixin",
 		"InGameHudMixin",
 		"ClientPlayerEntityMixin",
 		"ClientPlayNetworkHandlerMixin",
 		"OptionsScreenMixin",
-		"ClientPlayerInteractionManagerMixin",
 		"SkyPropertiesMixin",
 		"LightmapTextureManagerMixin"
 	],
