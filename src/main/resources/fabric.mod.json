@@ -9,7 +9,8 @@
 		"Flourick"
 	],
 	"contact": {
-		"sources": "https://github.com/Flourick/FMC-fabric"
+		"sources": "https://github.com/Flourick/FMC-fabric",
+    	"issues": "https://github.com/Flourick/FMC-fabric/issues"
 	},
 
 	"license": "MIT",
