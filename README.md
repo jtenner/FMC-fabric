@@ -8,7 +8,7 @@ Vanilla enhancements fabric mod. Compatible with Sodium.
 
 2. Download latest FMC-fabric release from [here](https://github.com/Flourick/FMC-fabric/releases).
 
-3. Once you run fabric loader a mods folder will be created in your *.minecraft* directory. Move the `fmc-fabric-X.X.X.jar` there.
+3. Once you run fabric loader a mods folder will be created in your *.minecraft* directory. Move the `fmc-fabric-X.X.X.jar` and `fabric-api-*.jar` there.
 
 ## Features
 
