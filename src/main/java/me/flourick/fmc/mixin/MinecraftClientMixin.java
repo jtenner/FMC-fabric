@@ -22,7 +22,7 @@ public class MinecraftClientMixin
 	@Inject(method = "handleBlockBreaking", at = @At("HEAD"), cancellable = true)
 	private void onHandleBlockBreaking(boolean bl, CallbackInfo info)
 	{
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking && !FMC.INSTANCE.isToolBreakingOverriden()) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -48,7 +48,7 @@ public class MinecraftClientMixin
 	@Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
 	private void onDoAttack(CallbackInfo info)
 	{
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking && !FMC.INSTANCE.isToolBreakingOverriden()) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 
 			if(mainHandItem.isDamaged()) {
@@ -74,7 +74,7 @@ public class MinecraftClientMixin
 	@Inject(method = "doItemUse", at = @At("HEAD"), cancellable = true)
 	private void onDoItemUse(CallbackInfo info)
 	{
-		if(FMC.OPTIONS.noToolBreaking) {
+		if(FMC.OPTIONS.noToolBreaking && !FMC.INSTANCE.isToolBreakingOverriden()) {
 			ItemStack mainHandItem = FMC.MC.player.getStackInHand(Hand.MAIN_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.MAIN_HAND);
 			ItemStack offHandItem = FMC.MC.player.getStackInHand(Hand.OFF_HAND).isEmpty() ? null : FMC.MC.player.getStackInHand(Hand.OFF_HAND);
 

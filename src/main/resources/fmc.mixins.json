@@ -10,6 +10,7 @@
 		"InGameHudMixin",
 		"ClientPlayerEntityMixin",
 		"ClientPlayNetworkHandlerMixin",
+		"ClientPlayerInteractionManagerMixin",
 		"OptionsScreenMixin",
 		"SkyPropertiesMixin",
 		"LightmapTextureManagerMixin"

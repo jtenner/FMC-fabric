@@ -1,5 +1,7 @@
 package me.flourick.fmc;
 
+import java.util.UUID;
+
 import org.lwjgl.glfw.GLFW;
 
 import me.flourick.fmc.options.FMCOptions;
@@ -13,6 +15,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.MessageType;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 
@@ -25,6 +29,8 @@ public class FMC implements ModInitializer
 	public static FMCOptions OPTIONS;
 	public static final FMCVars VARS = new FMCVars();
 
+	private KeyBinding toolBreakingOverrideKeybind;
+
 	@Override
 	public void onInitialize()
 	{
@@ -35,13 +41,31 @@ public class FMC implements ModInitializer
 		registerKeys();
 	}
 
+	public boolean isToolBreakingOverriden()
+	{
+		return toolBreakingOverrideKeybind.isPressed();
+	}
+
 	private void registerKeys()
 	{
 		KeyBinding fullbrightKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Fullbright", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "FMC"));
+		KeyBinding randomPlacementKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Random Placement", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
+		toolBreakingOverrideKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Tool Breaking Override", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_ALT, "FMC"));
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while(fullbrightKeybind.wasPressed()) {
 				FMC.OPTIONS.fullbright = !FMC.OPTIONS.fullbright;
+			}
+
+			while(randomPlacementKeybind.wasPressed()) {
+				FMC.OPTIONS.randomPlacement = !FMC.OPTIONS.randomPlacement;
+
+				if(FMC.OPTIONS.randomPlacement) {
+					FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText("Random Block Placement is now enabled!"), UUID.fromString("00000000-0000-0000-0000-000000000000"));
+				}
+				else {
+					FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText("Random Block Placement is now disabled!"), UUID.fromString("00000000-0000-0000-0000-000000000000"));
+				}
 			}
 		});
 

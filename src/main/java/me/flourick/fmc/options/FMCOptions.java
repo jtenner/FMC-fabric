@@ -48,8 +48,18 @@ public class FMCOptions
 	public boolean upperToolBreakingWarning;
 	public double cloudHeight;
 	public boolean fullbright;
+	public boolean randomPlacement;
 
 	//region OPTIONS
+
+	public static final MyBooleanOption RANDOM_PLACEMENT = new MyBooleanOption("Random Placement",
+		(gameOptions) -> {
+			return FMC.OPTIONS.randomPlacement;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.randomPlacement = bool;
+		}
+	);
 
 	public static final MyBooleanOption FULLBRIGHT = new MyBooleanOption("Fullbright",
 		(gameOptions) -> {
@@ -287,6 +297,7 @@ public class FMCOptions
 			printWriter.println("upperToolBreakingWarning:" + this.upperToolBreakingWarning);
 			printWriter.println("cloudHeight:" + this.cloudHeight);
 			printWriter.println("fullbright:" + this.fullbright);
+			printWriter.println("randomPlacement:" + this.randomPlacement);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -400,6 +411,10 @@ public class FMCOptions
 					case "fullbright":
 						this.fullbright = "true".equalsIgnoreCase(value);
 						break;
+
+					case "randomPlacement":
+						this.randomPlacement = "true".equalsIgnoreCase(value);
+						break;
 				}
 			});
 		}
@@ -424,5 +439,6 @@ public class FMCOptions
 		this.upperToolBreakingWarning = false;
 		this.cloudHeight = 128;
 		this.fullbright = false;
+		this.randomPlacement = false;
 	}
 }
