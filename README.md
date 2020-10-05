@@ -44,7 +44,7 @@ When your tools go below 10% durability and have 12 or less uses a red warning t
 
 #### 2) Prevent breaking
 
-This is disabled by default as it can break the vanilla experience. Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow.
+This is disabled by default as it can break the vanilla experience. Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow. Can be overriden (by default holding right ALT)
 
 ### Cloud Height
 
@@ -54,7 +54,11 @@ Allows you to set the height at which clouds render (0 - 256)
 
 Self-explanatory. Useful for caving and in Nether. Default keybind is *'r'*.
 
-## Preview (v1.1.5)
+### Random Block Placement
+
+Randomly selects a block from your hotbar to place every time you try to place a block or when you have an empty hand.
+
+## Preview (v1.3.0)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 
@@ -62,8 +66,8 @@ Static crosshair color, HUD info, death message & tool breaking warning.
 
 Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/91038699-7cbcd400-e60b-11ea-8a37-7998e7525345.png)
+![menu](https://user-images.githubusercontent.com/33128006/95081303-a2b0ba80-0719-11eb-8bd6-d74406a0b1ab.png)
 
 ----
 
-If you have any suggestions you can email me at: you@flourick.me
+If you have any suggestions you can email me at you@flourick.me or post in Issues.
