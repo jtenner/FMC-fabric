@@ -13,7 +13,10 @@
 		"ClientPlayerInteractionManagerMixin",
 		"OptionsScreenMixin",
 		"SkyPropertiesMixin",
-		"LightmapTextureManagerMixin"
+		"LightmapTextureManagerMixin",
+		"CameraMixin",
+		"GameRendererMixin",
+		"WorldRendererMixin"
 	],
 		"injectors": {
 		"defaultRequire": 1

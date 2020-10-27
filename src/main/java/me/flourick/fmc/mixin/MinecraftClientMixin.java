@@ -4,10 +4,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import me.flourick.fmc.FMC;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
@@ -43,6 +46,10 @@ public class MinecraftClientMixin
 				}
 			}
 		}
+
+		if(FMC.VARS.freecam) {
+			info.cancel();
+		}
 	}
 
 	@Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
@@ -68,6 +75,10 @@ public class MinecraftClientMixin
 					}
 				}
 			}
+		}
+
+		if(FMC.VARS.freecam) {
+			info.cancel();
 		}
 	}
 
@@ -123,6 +134,17 @@ public class MinecraftClientMixin
 					}
 				}
 			}
+		}
+
+		if(FMC.VARS.freecam) {
+			info.cancel();
+		}
+	}
+
+	@Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
+	public void onHasOutline(Entity entity, CallbackInfoReturnable<Boolean> info) {
+		if(FMC.OPTIONS.entityOutline && entity.getType() != EntityType.PLAYER) {
+			info.setReturnValue(true);
 		}
 	}
 }

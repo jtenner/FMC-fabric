@@ -5,6 +5,18 @@ import net.minecraft.util.Hand;
 
 public class FMCVars
 {
+	public boolean freecam;
+
+	public double freecamYaw;
+	public double freecamPitch;
+
+	public double playerYaw;
+	public double playerPitch;
+
+	public double freecamX;
+	public double freecamY;
+	public double freecamZ;
+
 	private double deathX;
 	private double deathY;
 	private double deathZ;

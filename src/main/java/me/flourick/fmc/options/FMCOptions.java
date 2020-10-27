@@ -49,8 +49,18 @@ public class FMCOptions
 	public double cloudHeight;
 	public boolean fullbright;
 	public boolean randomPlacement;
+	public boolean entityOutline;
 
 	//region OPTIONS
+
+	public static final MyBooleanOption ENTITY_OUTLINE = new MyBooleanOption("Entity Outline",
+		(gameOptions) -> {
+			return FMC.OPTIONS.entityOutline;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.entityOutline = bool;
+		}
+	);
 
 	public static final MyBooleanOption RANDOM_PLACEMENT = new MyBooleanOption("Random Placement",
 		(gameOptions) -> {
@@ -298,6 +308,7 @@ public class FMCOptions
 			printWriter.println("cloudHeight:" + this.cloudHeight);
 			printWriter.println("fullbright:" + this.fullbright);
 			printWriter.println("randomPlacement:" + this.randomPlacement);
+			printWriter.println("entityOutline:" + this.entityOutline);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -415,6 +426,9 @@ public class FMCOptions
 					case "randomPlacement":
 						this.randomPlacement = "true".equalsIgnoreCase(value);
 						break;
+					case "entityOutline":
+						this.entityOutline = "true".equalsIgnoreCase(value);
+						break;
 				}
 			});
 		}
@@ -440,5 +454,6 @@ public class FMCOptions
 		this.cloudHeight = 128;
 		this.fullbright = false;
 		this.randomPlacement = false;
+		this.entityOutline = false;
 	}
 }

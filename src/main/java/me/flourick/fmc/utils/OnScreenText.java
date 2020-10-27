@@ -47,7 +47,7 @@ public class OnScreenText
 		String direction = FMC.MC.getCameraEntity().getHorizontalFacing().asString();
 		direction = direction.substring(0, 1).toUpperCase() + direction.substring(1);
 
-		final String PFText = String.format("P: %.02f (%s)", FMC.MC.player.pitch, direction);
+		final String PFText = String.format("P: %.02f (%s)", FMC.MC.gameRenderer.getCamera().getPitch(), direction);
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, PFText, FMC.MC.getWindow().getScaledWidth() - FMC.MC.textRenderer.getWidth(PFText) - 1, FMC.MC.getWindow().getScaledHeight() - FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());
 	}
 
@@ -56,7 +56,7 @@ public class OnScreenText
 		String direction = FMC.MC.getCameraEntity().getHorizontalFacing().asString();
 		direction = direction.substring(0, 1).toUpperCase() + direction.substring(1);
 
-		final String PFText = String.format("P: %.02f (%s)", FMC.MC.player.pitch, direction);
+		final String PFText = String.format("P: %.02f (%s)", FMC.MC.gameRenderer.getCamera().getPitch(), direction);
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, PFText, FMC.MC.getWindow().getScaledWidth() - FMC.MC.textRenderer.getWidth(PFText) - 1, 2, Color.WHITE.getPacked());
 	}
 
