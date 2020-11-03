@@ -48,19 +48,19 @@ public class FMC implements ModInitializer
 
 	private void registerKeys()
 	{
-		KeyBinding fullbrightKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Fullbright", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "FMC"));
-		KeyBinding freecamKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Freecam", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_V, "FMC"));
+		KeyBinding fullbrightKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Fullbright", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
+		KeyBinding freecamKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Freecam", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
 		KeyBinding randomPlacementKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Random Placement", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
 		KeyBinding entityOutlineKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Entity Outline", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
 		toolBreakingOverrideKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Tool Breaking Override", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_ALT, "FMC"));
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while(fullbrightKeybind.wasPressed()) {
-				FMC.OPTIONS.fullbright = !FMC.OPTIONS.fullbright;
+				FMC.VARS.setFullbright(!FMC.VARS.fullbright());
 			}
 
 			while(entityOutlineKeybind.wasPressed()) {
-				FMC.OPTIONS.entityOutline = !FMC.OPTIONS.entityOutline;
+				FMC.VARS.setEntityOutline(!FMC.VARS.entityOutline());
 			}
 
 			while(freecamKeybind.wasPressed()) {
@@ -73,13 +73,17 @@ public class FMC implements ModInitializer
 					FMC.VARS.playerPitch = FMC.MC.player.pitch;
 					FMC.VARS.playerYaw = FMC.MC.player.yaw;
 
-					FMC.VARS.freecamX = FMC.MC.gameRenderer.getCamera().getPos().getX();
-					FMC.VARS.freecamY = FMC.MC.gameRenderer.getCamera().getPos().getY();
-					FMC.VARS.freecamZ = FMC.MC.gameRenderer.getCamera().getPos().getZ();
+					FMC.VARS.freecamX = FMC.VARS.prevFreecamX = FMC.MC.gameRenderer.getCamera().getPos().getX();
+					FMC.VARS.freecamY = FMC.VARS.prevFreecamY = FMC.MC.gameRenderer.getCamera().getPos().getY();
+					FMC.VARS.freecamZ = FMC.VARS.prevFreecamZ = FMC.MC.gameRenderer.getCamera().getPos().getZ();
 				}
 				else {
 					FMC.MC.player.pitch = (float) FMC.VARS.playerPitch;
 					FMC.MC.player.yaw = (float) FMC.VARS.playerYaw;
+
+					FMC.VARS.freecamForwardSpeed = 0.0f;
+					FMC.VARS.freecamUpSpeed = 0.0f;
+					FMC.VARS.freecamSideSpeed = 0.0f;
 				}
 			}
 

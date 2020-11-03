@@ -1,6 +1,6 @@
 # FMC
 
-Vanilla enhancements fabric mod. Compatible with Sodium.
+Various tweaks fabric mod. Compatible with Sodium.
 
 ## Installation
 
@@ -8,11 +8,11 @@ Vanilla enhancements fabric mod. Compatible with Sodium.
 
 2. Download latest FMC-fabric release from [here](https://github.com/Flourick/FMC-fabric/releases).
 
-3. Once you run fabric loader a mods folder will be created in your *.minecraft* directory. Move the `fmc-fabric-X.X.X.jar` and `fabric-api-*.jar` there.
+3. Once you run fabric loader a mods folder will be created in your *.minecraft* directory. Move the `fmc-fabric-*.jar` and `fabric-api-*.jar` there.
 
 ## Features
 
-List of main features. Everything is configurable in in-game options menu called 'FMC...'. Keybindings are configured in the usual Controls menu (FMC category).
+List of main features. Configuration is in in-game options menu called 'FMC...'. Keybindings are configured in the usual Controls menu (FMC category) and are by default unset.
 
 ### Crosshair
 
@@ -44,21 +44,29 @@ When your tools go below 10% durability and have 12 or less uses a red warning t
 
 #### 2) Prevent breaking
 
-This is disabled by default as it can break the vanilla experience. Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow. Can be overriden (by default holding right ALT)
+Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow. Can be overriden (by default holding right ALT)
 
 ### Cloud Height
 
 Allows you to set the height at which clouds render (0 - 256)
 
-### Fullbright
+### Fullbright (keybindable)
 
-Self-explanatory. Useful for caving and in Nether. Default keybind is *'r'*.
+Self-explanatory. Useful for caving and in Nether.
 
-### Random Block Placement
+### Entity Outline (keybindable)
+
+Makes all entities (except players) glow white and be seen through walls. Useful for mob spawn proofing.
+
+### Freecam (keybindable)
+
+Allows you to leave your body and explore your surroundings. Works similar to spectator.
+
+### Random Block Placement (keybindable)
 
 Randomly selects a block from your hotbar to place every time you try to place a block or when you have an empty hand.
 
-## Preview (v1.3.0)
+## Preview (v1.4.0)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 
@@ -66,7 +74,7 @@ Static crosshair color, HUD info, death message & tool breaking warning.
 
 Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/95081303-a2b0ba80-0719-11eb-8bd6-d74406a0b1ab.png)
+![menu](https://user-images.githubusercontent.com/33128006/98001029-75752c00-1ded-11eb-81f7-aa8b684f6bd5.png)
 
 ----
 

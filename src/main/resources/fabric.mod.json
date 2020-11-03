@@ -4,7 +4,7 @@
 	"version": "${version}",
 
 	"name": "FMC",
-	"description": "Vanilla client enhancements mod",
+	"description": "Various tweaks client-side mod",
 	"authors": [
 		"Flourick"
 	],

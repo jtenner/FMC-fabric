@@ -2,6 +2,7 @@ package me.flourick.fmc.mixin;
 
 import net.minecraft.client.render.Camera;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BlockView;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,39 +38,9 @@ public class CameraMixin
 		if(FMC.VARS.freecam) {
 			this.ready = true;
 			this.area = area;
-			  
+
 			this.setRotation((float)FMC.VARS.freecamYaw, (float)FMC.VARS.freecamPitch);
-
-            float forward = 0; float up = 0; float side = 0;
-			
-            if(FMC.MC.options.keyForward.isPressed()) {
-				forward++;
-			}
-            if(FMC.MC.options.keyBack.isPressed()) {
-				forward--;
-			}
-            if(FMC.MC.options.keyLeft.isPressed()) {
-				side++;
-			}
-            if(FMC.MC.options.keyRight.isPressed()) {
-				side--;
-			}
-            if(FMC.MC.options.keyJump.isPressed()) {
-				up++;
-			}
-            if(FMC.MC.options.keySneak.isPressed()) {
-				up--;
-			}
-
-			double rotateX = Math.sin(this.yaw * Math.PI / 180D);
-			double rotateZ = Math.cos(this.yaw * Math.PI / 180D);
-			double speed = (FMC.MC.player.isSprinting() ? 0.16D : 0.07D);
-
-			FMC.VARS.freecamX += (side * rotateZ - forward * rotateX) * speed;
-			FMC.VARS.freecamY += up * speed;
-			FMC.VARS.freecamZ += (forward * rotateZ + side * rotateX) * speed;
-
-			this.setPos(FMC.VARS.freecamX, FMC.VARS.freecamY, FMC.VARS.freecamZ);
+			this.setPos(MathHelper.lerp((double)tickDelta, FMC.VARS.prevFreecamX, FMC.VARS.freecamX), MathHelper.lerp((double)tickDelta, FMC.VARS.prevFreecamY, FMC.VARS.freecamY), MathHelper.lerp((double)tickDelta, FMC.VARS.prevFreecamZ, FMC.VARS.freecamZ));
 
 			info.cancel();
 		}

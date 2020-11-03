@@ -11,9 +11,9 @@ public class OnScreenText
 	public static void drawCoordinatesTextLower(MatrixStack matrixStack)
 	{
 		if(FMC.OPTIONS.verticalCoordinates) {
-			final String X = String.format("X: %.01f", FMC.MC.player.getX());	
-			final String Y = String.format("Y: %.01f", FMC.MC.player.getY());
-			final String Z = String.format("Z: %.01f", FMC.MC.player.getZ());
+			final String X = String.format("X: %.01f", FMC.VARS.freecam ? FMC.VARS.freecamX : FMC.MC.player.getX());	
+			final String Y = String.format("Y: %.01f", FMC.VARS.freecam ? FMC.VARS.freecamY : FMC.MC.player.getY());
+			final String Z = String.format("Z: %.01f", FMC.VARS.freecam ? FMC.VARS.freecamZ : FMC.MC.player.getZ());
 
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, X, 2, FMC.MC.getWindow().getScaledHeight() - 3*FMC.MC.textRenderer.fontHeight - 2, Color.WHITE.getPacked());
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, Y, 2, FMC.MC.getWindow().getScaledHeight() - 2*FMC.MC.textRenderer.fontHeight - 1, Color.WHITE.getPacked());
@@ -28,9 +28,9 @@ public class OnScreenText
 	public static void drawCoordinatesTextUpper(MatrixStack matrixStack)
 	{
 		if(FMC.OPTIONS.verticalCoordinates) {
-			final String X = String.format("X: %.01f", FMC.MC.player.getX());		
-			final String Y = String.format("Y: %.01f", FMC.MC.player.getY());
-			final String Z = String.format("Z: %.01f", FMC.MC.player.getZ());
+			final String X = String.format("X: %.01f", FMC.VARS.freecam ? FMC.VARS.freecamX : FMC.MC.player.getX());		
+			final String Y = String.format("Y: %.01f", FMC.VARS.freecam ? FMC.VARS.freecamY : FMC.MC.player.getY());
+			final String Z = String.format("Z: %.01f", FMC.VARS.freecam ? FMC.VARS.freecamZ : FMC.MC.player.getZ());
 
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, X, 2, 2, Color.WHITE.getPacked());
 			FMC.MC.textRenderer.drawWithShadow(matrixStack, Y, 2, 3 + FMC.MC.textRenderer.fontHeight, Color.WHITE.getPacked());

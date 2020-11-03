@@ -46,7 +46,34 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 		if(FMC.OPTIONS.disableWToSprint) {
 			this.ticksLeftToDoubleTapSprint = -1;
 		}
+
+		if(FMC.VARS.freecam) {
+			float forward = FMC.MC.player.input.movementForward;
+			float up = (FMC.MC.player.input.jumping ? 1.0f : 0.0f) - (FMC.MC.player.input.sneaking ? 1.0f : 0.0f);
+            float side = FMC.MC.player.input.movementSideways;
+			
+            FMC.VARS.freecamForwardSpeed = forward != 0 ? updateMotion(FMC.VARS.freecamForwardSpeed, forward) : FMC.VARS.freecamForwardSpeed * 0.5f;
+            FMC.VARS.freecamUpSpeed = up != 0 ?  updateMotion(FMC.VARS.freecamUpSpeed, up) : FMC.VARS.freecamUpSpeed * 0.5f;
+            FMC.VARS.freecamSideSpeed = side != 0 ?  updateMotion(FMC.VARS.freecamSideSpeed , side) : FMC.VARS.freecamSideSpeed * 0.5f;
+
+            double rotateX = Math.sin(FMC.VARS.freecamYaw * Math.PI / 180D);
+			double rotateZ = Math.cos(FMC.VARS.freecamYaw * Math.PI / 180D);
+			double speed = FMC.MC.player.isSprinting() ? 1.2D : 0.55D;
+
+			FMC.VARS.prevFreecamX = FMC.VARS.freecamX;
+			FMC.VARS.prevFreecamY = FMC.VARS.freecamY;
+			FMC.VARS.prevFreecamZ = FMC.VARS.freecamZ;
+
+			FMC.VARS.freecamX += (FMC.VARS.freecamSideSpeed * rotateZ - FMC.VARS.freecamForwardSpeed * rotateX) * speed;
+			FMC.VARS.freecamY += FMC.VARS.freecamUpSpeed * speed;
+			FMC.VARS.freecamZ += (FMC.VARS.freecamForwardSpeed * rotateZ + FMC.VARS.freecamSideSpeed * rotateX) * speed;
+		}
 	}
+
+	private float updateMotion(float motion, float direction)
+    {
+        return (direction + motion == 0) ? 0.0f : MathHelper.clamp(motion + ((direction < 0) ? -0.35f : 0.35f), -1f, 1f);
+    }
 
 	// PREVENTS MOVEMENT (freecam)
 	@Inject(method = "isCamera", at = @At("HEAD"), cancellable = true)

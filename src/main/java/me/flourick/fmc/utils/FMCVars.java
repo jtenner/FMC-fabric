@@ -17,6 +17,17 @@ public class FMCVars
 	public double freecamY;
 	public double freecamZ;
 
+	public double prevFreecamX;
+	public double prevFreecamY;
+	public double prevFreecamZ;
+
+	public float freecamForwardSpeed;
+	public float freecamSideSpeed;
+	public float freecamUpSpeed;
+
+	private boolean fullbright;
+	private boolean entityOutline;
+
 	private double deathX;
 	private double deathY;
 	private double deathZ;
@@ -139,5 +150,19 @@ public class FMCVars
 		this.offHandToolItemStack = offHandToolItemStack;
 	}
 
-	
+	public boolean fullbright() {
+		return fullbright;
+	}
+
+	public void setFullbright(boolean fullbright) {
+		this.fullbright = fullbright;
+	}
+
+	public boolean entityOutline() {
+		return entityOutline;
+	}
+
+	public void setEntityOutline(boolean entityOutline) {
+		this.entityOutline = entityOutline;
+	}
 }

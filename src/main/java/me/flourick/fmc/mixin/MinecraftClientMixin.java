@@ -143,7 +143,7 @@ public class MinecraftClientMixin
 
 	@Inject(method = "hasOutline", at = @At("HEAD"), cancellable = true)
 	public void onHasOutline(Entity entity, CallbackInfoReturnable<Boolean> info) {
-		if(FMC.OPTIONS.entityOutline && entity.getType() != EntityType.PLAYER) {
+		if(FMC.VARS.entityOutline() && entity.getType() != EntityType.PLAYER || (FMC.VARS.freecam && entity.equals(FMC.MC.player))) {
 			info.setReturnValue(true);
 		}
 	}
