@@ -56,8 +56,8 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             FMC.VARS.freecamUpSpeed = up != 0 ?  updateMotion(FMC.VARS.freecamUpSpeed, up) : FMC.VARS.freecamUpSpeed * 0.5f;
             FMC.VARS.freecamSideSpeed = side != 0 ?  updateMotion(FMC.VARS.freecamSideSpeed , side) : FMC.VARS.freecamSideSpeed * 0.5f;
 
-            double rotateX = Math.sin(FMC.VARS.freecamYaw * Math.PI / 180D);
-			double rotateZ = Math.cos(FMC.VARS.freecamYaw * Math.PI / 180D);
+            double rotateX = Math.sin(FMC.VARS.freecamYaw * Math.PI / 180.0D);
+			double rotateZ = Math.cos(FMC.VARS.freecamYaw * Math.PI / 180.0D);
 			double speed = FMC.MC.player.isSprinting() ? 1.2D : 0.55D;
 
 			FMC.VARS.prevFreecamX = FMC.VARS.freecamX;

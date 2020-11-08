@@ -49,8 +49,18 @@ public class FMCOptions
 	public double cloudHeight;
 	public boolean randomPlacement;
 	public boolean noNetherFog;
+	public boolean noBlockBreakParticles;
 
 	//region OPTIONS
+
+	public static final MyBooleanOption NO_BLOCK_BREAK_PARTICLES = new MyBooleanOption("No Block Break Particles",
+		(gameOptions) -> {
+			return FMC.OPTIONS.noBlockBreakParticles;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.noBlockBreakParticles = bool;
+		}
+	);
 
 	public static final MyBooleanOption NO_NETHER_FOG = new MyBooleanOption("No Nether Fog",
 		(gameOptions) -> {
@@ -298,6 +308,7 @@ public class FMCOptions
 			printWriter.println("cloudHeight:" + this.cloudHeight);
 			printWriter.println("randomPlacement:" + this.randomPlacement);
 			printWriter.println("noNetherFog:" + this.noNetherFog);
+			printWriter.println("noBlockBreakParticles:" + this.noBlockBreakParticles);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -415,6 +426,10 @@ public class FMCOptions
 					case "noNetherFog":
 						this.noNetherFog = "true".equalsIgnoreCase(value);
 						break;
+
+					case "noBlockBreakParticles":
+						this.noBlockBreakParticles = "true".equalsIgnoreCase(value);
+						break;
 				}
 			});
 		}
@@ -440,5 +455,6 @@ public class FMCOptions
 		this.cloudHeight = 128;
 		this.randomPlacement = false;
 		this.noNetherFog = false;
+		this.noBlockBreakParticles = false;
 	}
 }

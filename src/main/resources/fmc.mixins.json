@@ -17,7 +17,8 @@
 		"LightmapTextureManagerMixin",
 		"CameraMixin",
 		"GameRendererMixin",
-		"WorldRendererMixin"
+		"WorldRendererMixin",
+		"ParticleManagerMixin"
 	],
 		"injectors": {
 		"defaultRequire": 1
