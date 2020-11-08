@@ -18,10 +18,6 @@ import me.flourick.fmc.FMC;
 public class CameraMixin
 {
 	@Shadow
-	private float yaw;
-	@Shadow
-	private float pitch;
-	@Shadow
 	private boolean ready;
 	@Shadow
 	private BlockView area;

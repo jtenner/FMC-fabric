@@ -13,6 +13,7 @@
 		"ClientPlayerInteractionManagerMixin",
 		"OptionsScreenMixin",
 		"SkyPropertiesMixin",
+		"SkyPropertiesNetherMixin",
 		"LightmapTextureManagerMixin",
 		"CameraMixin",
 		"GameRendererMixin",
