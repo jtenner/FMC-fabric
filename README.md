@@ -1,6 +1,6 @@
 # FMC
 
-Various tweaks fabric mod. Compatible with Sodium.
+Various tweaks fabric mod, compatible with Sodium.
 
 ## Installation
 
@@ -44,11 +44,27 @@ When your tools go below 10% durability and have 12 or less uses a red warning t
 
 #### 2) Prevent breaking
 
-Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow. Can be overriden (by default holding right ALT)
+Makes your tools stop working at certain durability (will stop at 2 durability for most tools). This includes swords, pickaxes, axes, shovels, hoes, trident, bow and crossbow. Can be overriden (by default holding right ALT).
 
 ### Cloud Height
 
-Allows you to set the height at which clouds render (0 - 256)
+Allows you to set the height at which clouds render (0 - 256).
+
+### No Nether Fog
+
+Disables the thick nether fog (but leaves the default fog intact).
+
+### No Block Break Particles
+
+Disables the particles that spawn when you break a block.
+
+### Refill Hand
+
+Once the stack in your main hand is below 50% automatically finds the same item in your inventory and restocks it.
+
+### Random Block Placement (keybindable)
+
+Randomly selects a block from your hotbar to place every time you try to place a block or when you have an empty hand.
 
 ### Fullbright (keybindable)
 
@@ -62,11 +78,7 @@ Makes all entities (except players) glow white and be seen through walls. Useful
 
 Allows you to leave your body and explore your surroundings. Works similar to spectator.
 
-### Random Block Placement (keybindable)
-
-Randomly selects a block from your hotbar to place every time you try to place a block or when you have an empty hand.
-
-## Preview (v1.4.0)
+## Preview (v1.4.1)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 
@@ -74,8 +86,8 @@ Static crosshair color, HUD info, death message & tool breaking warning.
 
 Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/98001029-75752c00-1ded-11eb-81f7-aa8b684f6bd5.png)
+![menu](https://user-images.githubusercontent.com/33128006/98689627-669df480-236c-11eb-8659-17048266464a.png)
 
 ----
 
-If you have any suggestions you can email me at you@flourick.me or post in Issues.
+If you have any suggestions you can post in Issues.

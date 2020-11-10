@@ -40,7 +40,7 @@ public class FMCSettingsScreen extends GameOptionsScreen
 		this.list.addSingleOptionEntry(new SpacerOption("Render"));
 		this.list.addAll(new Option[] {FMCOptions.CLOUD_HEIGHT, FMCOptions.NO_NETHER_FOG, FMCOptions.NO_BLOCK_BREAK_PARTICLES});
 		this.list.addSingleOptionEntry(new SpacerOption("Other"));
-		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SEND_DEATH_COORDINATES, FMCOptions.RANDOM_PLACEMENT});
+		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SEND_DEATH_COORDINATES, FMCOptions.RANDOM_PLACEMENT, FMCOptions.REFILL_HAND});
 		this.children.add(this.list);
 		this.addButton(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20, ScreenTexts.DONE, (buttonWidget) -> {
 			FMC.OPTIONS.write();

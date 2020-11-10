@@ -50,8 +50,18 @@ public class FMCOptions
 	public boolean randomPlacement;
 	public boolean noNetherFog;
 	public boolean noBlockBreakParticles;
+	public boolean refillHand;
 
 	//region OPTIONS
+
+	public static final MyBooleanOption REFILL_HAND = new MyBooleanOption("Refill Hand",
+		(gameOptions) -> {
+			return FMC.OPTIONS.refillHand;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.refillHand = bool;
+		}
+	);
 
 	public static final MyBooleanOption NO_BLOCK_BREAK_PARTICLES = new MyBooleanOption("No Block Break Particles",
 		(gameOptions) -> {
@@ -309,6 +319,7 @@ public class FMCOptions
 			printWriter.println("randomPlacement:" + this.randomPlacement);
 			printWriter.println("noNetherFog:" + this.noNetherFog);
 			printWriter.println("noBlockBreakParticles:" + this.noBlockBreakParticles);
+			printWriter.println("refillHand:" + this.refillHand);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -430,6 +441,10 @@ public class FMCOptions
 					case "noBlockBreakParticles":
 						this.noBlockBreakParticles = "true".equalsIgnoreCase(value);
 						break;
+
+					case "refillHand":
+						this.refillHand = "true".equalsIgnoreCase(value);
+						break;
 				}
 			});
 		}
@@ -456,5 +471,6 @@ public class FMCOptions
 		this.randomPlacement = false;
 		this.noNetherFog = false;
 		this.noBlockBreakParticles = false;
+		this.refillHand = false;
 	}
 }
