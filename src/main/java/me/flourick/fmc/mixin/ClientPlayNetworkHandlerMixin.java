@@ -22,7 +22,7 @@ public class ClientPlayNetworkHandlerMixin
 			
 			if(entity == FMC.MC.player) {
 				FMC.VARS.setLastDeathCoordinates(FMC.MC.player.getX(), FMC.MC.player.getY(), FMC.MC.player.getZ(), FMC.MC.player.clientWorld.getRegistryKey().getValue().toString().split(":")[1].replace('_', ' '));
-				FMC.VARS.setIsAfterDeath(true);
+				FMC.VARS.isAfterDeath = true;
 			}
 		}
 	}

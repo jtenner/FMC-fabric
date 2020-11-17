@@ -15,7 +15,7 @@ public class LightmapTextureManagerMixin
 	@Inject(method = "getBrightness", at = @At("HEAD"), cancellable = true)
 	private void onGetBrightness(CallbackInfoReturnable<Float> info)
 	{
-		if(FMC.VARS.fullbright()) {
+		if(FMC.VARS.fullbright) {
 			info.setReturnValue(1f);
 		}
 	}

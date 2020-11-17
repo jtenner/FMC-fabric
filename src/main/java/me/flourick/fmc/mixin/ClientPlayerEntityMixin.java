@@ -1,9 +1,13 @@
 package me.flourick.fmc.mixin;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.MessageType;
+import net.minecraft.stat.StatHandler;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.MathHelper;
 
@@ -31,11 +35,19 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 	@Shadow
 	int ticksLeftToDoubleTapSprint;
 
+	@Inject(method = "<init>", at = @At("RETURN"))
+	private void onConstructor(MinecraftClient client, ClientWorld world, ClientPlayNetworkHandler networkHandler, StatHandler stats, ClientRecipeBook recipeBook, boolean lastSneaking, boolean lastSprinting, CallbackInfo info)
+	{
+		if(FMC.OPTIONS.autoreconnect) {
+			FMC.VARS.autoreconnectTries = 0;
+		}
+	}
+
 	@Inject(method = "setShowsDeathScreen", at = @At("HEAD"))
 	private void onSetShowsDeathScreen(CallbackInfo info)
 	{
-		if(FMC.VARS.getIsAfterDeath() && FMC.OPTIONS.sendDeathCoordinates) {
-			FMC.VARS.setIsAfterDeath(false);
+		if(FMC.VARS.isAfterDeath && FMC.OPTIONS.sendDeathCoordinates) {
+			FMC.VARS.isAfterDeath = false;
 			FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText(String.format("You died at X: %.01f Z: %.01f Y: %.01f in %s!", FMC.VARS.getLastDeathX(), FMC.VARS.getLastDeathZ(), FMC.VARS.getLastDeathY(), FMC.VARS.getLastDeathWorld())), UUID.fromString("00000000-0000-0000-0000-000000000000"));
 		}
 	}

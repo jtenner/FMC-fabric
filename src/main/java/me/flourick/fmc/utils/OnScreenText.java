@@ -89,7 +89,7 @@ public class OnScreenText
 			y = (int)(((FMC.MC.getWindow().getScaledHeight() / 2 * 1/FMC.OPTIONS.toolBreakingWarningScale)) - (FMC.MC.textRenderer.fontHeight + 60/FMC.OPTIONS.toolBreakingWarningScale));
 		}
 
-		final String ToolWarningText = (FMC.VARS.getToolHand().equals(Hand.MAIN_HAND) ? "Main hand" : "Offhand") + " tool has " + FMC.VARS.getToolDurability() + " durability left!";
+		final String ToolWarningText = (FMC.VARS.toolHand.equals(Hand.MAIN_HAND) ? "Main hand" : "Offhand") + " tool has " + FMC.VARS.toolDurability + " durability left!";
 		FMC.MC.textRenderer.drawWithShadow(matrixStack, ToolWarningText, (float) -(FMC.MC.textRenderer.getWidth(ToolWarningText) / 2), y, new Color(alpha, 255, 0, 0).getPacked());
 	}
 }

@@ -3,7 +3,7 @@ package me.flourick.fmc.utils;
 import me.flourick.fmc.FMC;
 import me.flourick.fmc.options.FMCOptions;
 import me.flourick.fmc.options.SpacerOption;
-import net.minecraft.client.gui.DrawableHelper;
+
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.screen.options.GameOptionsScreen;
@@ -39,6 +39,9 @@ public class FMCSettingsScreen extends GameOptionsScreen
 		this.list.addAll(new Option[] {FMCOptions.UPPER_TOOL_BREAKING_WARNING, FMCOptions.TOOL_BREAKING_WARNING_SCALE});
 		this.list.addSingleOptionEntry(new SpacerOption("Render"));
 		this.list.addAll(new Option[] {FMCOptions.CLOUD_HEIGHT, FMCOptions.NO_NETHER_FOG, FMCOptions.NO_BLOCK_BREAK_PARTICLES});
+		this.list.addSingleOptionEntry(new SpacerOption("Autoreconnect"));
+		this.list.addAll(new Option[] {FMCOptions.AUTORECONNECT, FMCOptions.AUTORECONNECT_MAX_TRIES});
+		this.list.addSingleOptionEntry(FMCOptions.AUTORECONNECT_TIMEOUT);
 		this.list.addSingleOptionEntry(new SpacerOption("Other"));
 		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SEND_DEATH_COORDINATES, FMCOptions.RANDOM_PLACEMENT, FMCOptions.REFILL_HAND});
 		this.children.add(this.list);
@@ -53,7 +56,7 @@ public class FMCSettingsScreen extends GameOptionsScreen
 	{
 		this.renderBackground(matrixStack);
 		this.list.render(matrixStack, mouseX, mouseY, delta);
-		DrawableHelper.drawCenteredString(matrixStack, this.textRenderer, this.title.asString(), this.width / 2, 12, Color.WHITE.getPacked());
+		drawCenteredString(matrixStack, this.textRenderer, this.title.asString(), this.width / 2, 12, Color.WHITE.getPacked());
 
 		super.render(matrixStack, mouseX, mouseY, delta);
 	}

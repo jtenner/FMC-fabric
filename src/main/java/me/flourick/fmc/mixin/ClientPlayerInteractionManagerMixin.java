@@ -57,7 +57,8 @@ public class ClientPlayerInteractionManagerMixin
 					// if random placement enabled don't take items from hotbar
 					int begIdx = FMC.OPTIONS.randomPlacement ? 9 : 0;
 
-					for(int i = begIdx; i < sz; i++) {
+					// reverse search to pick items from back of the inventory first rather than hotbar
+					for(int i = sz-1; i >= begIdx; i--) {
 						if(inventory.main.get(i).getItem() == using.getItem() && i != inventory.selectedSlot) {
 							ItemStack found = inventory.main.get(i);
 

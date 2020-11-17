@@ -12,6 +12,9 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ConnectScreen;
+import net.minecraft.client.gui.screen.DisconnectedScreen;
+import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.item.ItemStack;
@@ -56,11 +59,11 @@ public class FMC implements ModInitializer
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while(fullbrightKeybind.wasPressed()) {
-				FMC.VARS.setFullbright(!FMC.VARS.fullbright());
+				FMC.VARS.fullbright = !FMC.VARS.fullbright;
 			}
 
 			while(entityOutlineKeybind.wasPressed()) {
-				FMC.VARS.setEntityOutline(!FMC.VARS.entityOutline());
+				FMC.VARS.entityOutline = !FMC.VARS.entityOutline;
 			}
 
 			while(freecamKeybind.wasPressed()) {
@@ -97,6 +100,28 @@ public class FMC implements ModInitializer
 					FMC.MC.inGameHud.addChatMessage(MessageType.CHAT, new LiteralText("Random Block Placement is now disabled!"), UUID.fromString("00000000-0000-0000-0000-000000000000"));
 				}
 			}
+
+			if(FMC.VARS.autoreconnectTicks > 0 && FMC.OPTIONS.autoreconnect) {
+				if(FMC.MC.currentScreen instanceof DisconnectedScreen) {
+					FMC.VARS.autoreconnectTicks -= 1;
+
+					if(FMC.VARS.autoreconnectTicks == 0 && FMC.VARS.lastJoinedServer != null) {
+						if(FMC.VARS.autoreconnectTries < FMC.OPTIONS.autoreconnectMaxTries + 1) {
+							FMC.MC.disconnect();
+							FMC.MC.openScreen(new ConnectScreen(new TitleScreen(), FMC.MC, FMC.VARS.lastJoinedServer));
+						}
+						else {
+							// we get here when all tries are due
+							FMC.VARS.autoreconnectTries = 0;
+						}
+					}
+				}
+				else {
+					// we get here when player decides to go back to multiplayer screen before all tries are due
+					FMC.VARS.autoreconnectTicks = 0;
+					FMC.VARS.autoreconnectTries = 0;
+				}
+			}
 		});
 
 		ClientTickEvents.END_WORLD_TICK.register(client -> {
@@ -107,26 +132,26 @@ public class FMC implements ModInitializer
 				int mainHandDurability = mainHandItem.getMaxDamage() - mainHandItem.getDamage();;
 				int offHandDurability = offHandItem.getMaxDamage() - offHandItem.getDamage();
 
-				if(mainHandItem.isDamaged() && mainHandItem != FMC.VARS.getMainHandToolItemStack()) {
+				if(mainHandItem.isDamaged() && mainHandItem != FMC.VARS.mainHandToolItemStack) {
 					if(MathHelper.floor(mainHandItem.getMaxDamage() * 0.9f) < mainHandItem.getDamage() + 1 && mainHandDurability < 13) {
-						FMC.VARS.setToolDurability(mainHandDurability);
-						FMC.VARS.setToolHand(Hand.MAIN_HAND);
+						FMC.VARS.toolDurability = mainHandDurability;
+						FMC.VARS.toolHand = Hand.MAIN_HAND;
 						FMC.VARS.resetToolWarningTicks();
 					}
 				}
 
-				if(offHandItem.isDamaged() && offHandItem != FMC.VARS.getOffHandToolItemStack()) {
+				if(offHandItem.isDamaged() && offHandItem != FMC.VARS.offHandToolItemStack) {
 					if(MathHelper.floor(offHandItem.getMaxDamage() * 0.9f) < offHandItem.getDamage() + 1 && offHandDurability < 13) {
 						if(mainHandDurability == 0 || offHandDurability < mainHandDurability) {
-							FMC.VARS.setToolDurability(offHandDurability);
-							FMC.VARS.setToolHand(Hand.OFF_HAND);
+							FMC.VARS.toolDurability = offHandDurability;
+							FMC.VARS.toolHand = Hand.OFF_HAND;
 							FMC.VARS.resetToolWarningTicks();
 						}
 					}
 				}
 
-				FMC.VARS.setMainHandToolItemStack(mainHandItem);
-				FMC.VARS.setOffHandToolItemStack(offHandItem);
+				FMC.VARS.mainHandToolItemStack = mainHandItem;
+				FMC.VARS.offHandToolItemStack = offHandItem;
 			}
 		});
 	}

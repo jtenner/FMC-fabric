@@ -18,7 +18,8 @@
 		"CameraMixin",
 		"GameRendererMixin",
 		"WorldRendererMixin",
-		"ParticleManagerMixin"
+		"ParticleManagerMixin",
+		"DisconnectedScreenMixin"
 	],
 		"injectors": {
 		"defaultRequire": 1

@@ -34,6 +34,18 @@ public class FMCOptions
 		init();
 	}
 
+	private void init()
+	{
+		loadDefaults();
+
+		if(!optionsFile.exists()) {
+			write();
+			return;
+		}
+
+		read();
+	}
+
 	public ButtonPosition buttonPosition;
 	public boolean crosshairStaticColor;
 	public Color crosshairColor;
@@ -51,8 +63,44 @@ public class FMCOptions
 	public boolean noNetherFog;
 	public boolean noBlockBreakParticles;
 	public boolean refillHand;
+	public boolean autoreconnect;
+	public int autoreconnectMaxTries;
+	public int autoreconnectTimeout;
 
 	//region OPTIONS
+
+	public static final DoubleOption AUTORECONNECT_TIMEOUT = new DoubleOption("nope", 3.0d, 300.0d, 1.0f,
+		(gameOptions) -> {
+			return (double)FMC.OPTIONS.autoreconnectTimeout;
+		},
+		(gameOptions, timeout) -> {
+			FMC.OPTIONS.autoreconnectTimeout = MathHelper.ceil(timeout);
+		},
+		(gameOptions, doubleOption) -> {
+			return new LiteralText("Timeout: " + BigDecimal.valueOf(FMC.OPTIONS.autoreconnectTimeout).setScale(0, RoundingMode.HALF_UP) + "s");
+		}
+	);
+
+	public static final DoubleOption AUTORECONNECT_MAX_TRIES = new DoubleOption("nope", 1.0d, 100.0d, 1.0f,
+		(gameOptions) -> {
+			return (double)FMC.OPTIONS.autoreconnectMaxTries;
+		},
+		(gameOptions, tries) -> {
+			FMC.OPTIONS.autoreconnectMaxTries = MathHelper.ceil(tries);
+		},
+		(gameOptions, doubleOption) -> {
+			return new LiteralText("Max Tries: " + BigDecimal.valueOf(FMC.OPTIONS.autoreconnectMaxTries).setScale(0, RoundingMode.HALF_UP));
+		}
+	);
+
+	public static final MyBooleanOption AUTORECONNECT = new MyBooleanOption("Autoreconnect",
+		(gameOptions) -> {
+			return FMC.OPTIONS.autoreconnect;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.autoreconnect = bool;
+		}
+	);
 
 	public static final MyBooleanOption REFILL_HAND = new MyBooleanOption("Refill Hand",
 		(gameOptions) -> {
@@ -320,22 +368,13 @@ public class FMCOptions
 			printWriter.println("noNetherFog:" + this.noNetherFog);
 			printWriter.println("noBlockBreakParticles:" + this.noBlockBreakParticles);
 			printWriter.println("refillHand:" + this.refillHand);
+			printWriter.println("autoreconnect:" + this.autoreconnect);
+			printWriter.println("autoreconnectMaxTries:" + this.autoreconnectMaxTries);
+			printWriter.println("autoreconnectTimeout:" + this.autoreconnectTimeout);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
 		}
-	}
-
-	private void init()
-	{
-		loadDefaults();
-
-		if(!optionsFile.exists()) {
-			write();
-			return;
-		}
-
-		read();
 	}
 
 	private void read()
@@ -445,6 +484,25 @@ public class FMCOptions
 					case "refillHand":
 						this.refillHand = "true".equalsIgnoreCase(value);
 						break;
+					case "autoreconnect":
+						this.autoreconnect = "true".equalsIgnoreCase(value);
+						break;
+					case "autoreconnectMaxTries":
+						try {
+							this.autoreconnectMaxTries = MathHelper.clamp(Integer.parseInt(value), 1, 100);
+						}
+						catch(NumberFormatException e) {
+							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
+						}
+						break;
+					case "autoreconnectTimeout":
+						try {
+							this.autoreconnectTimeout = MathHelper.clamp(Integer.parseInt(value), 3, 300);
+						}
+						catch(NumberFormatException e) {
+							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
+						}
+						break;
 				}
 			});
 		}
@@ -467,10 +525,13 @@ public class FMCOptions
 		this.toolWarning = true;
 		this.toolBreakingWarningScale = 1.5d;
 		this.upperToolBreakingWarning = false;
-		this.cloudHeight = 128;
+		this.cloudHeight = 128.0d;
 		this.randomPlacement = false;
 		this.noNetherFog = false;
 		this.noBlockBreakParticles = false;
 		this.refillHand = false;
+		this.autoreconnect = false;
+		this.autoreconnectMaxTries = 5;
+		this.autoreconnectTimeout = 5;
 	}
 }

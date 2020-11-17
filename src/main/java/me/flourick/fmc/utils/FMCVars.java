@@ -1,5 +1,6 @@
 package me.flourick.fmc.utils;
 
+import net.minecraft.client.network.ServerInfo;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
@@ -25,20 +26,24 @@ public class FMCVars
 	public float freecamSideSpeed;
 	public float freecamUpSpeed;
 
-	private boolean fullbright;
-	private boolean entityOutline;
+	public int autoreconnectTries;
+	public int autoreconnectTicks;
+	public ServerInfo lastJoinedServer;
+
+	public boolean fullbright;
+	public boolean entityOutline;
 
 	private double deathX;
 	private double deathY;
 	private double deathZ;
 	private String deathWorld;
-	private boolean isAfterDeath;
+	public boolean isAfterDeath;
 
 	private int toolWarningTextTicksLeft;
-	private int toolDurability;
-	private ItemStack mainHandToolItemStack;
-	private ItemStack offHandToolItemStack;
-	private Hand toolHand;
+	public int toolDurability;
+	public ItemStack mainHandToolItemStack;
+	public ItemStack offHandToolItemStack;
+	public Hand toolHand;
 
 	public FMCVars()
 	{
@@ -47,6 +52,9 @@ public class FMCVars
 		this.deathZ = 0;
 		this.deathWorld = "";
 		this.isAfterDeath = false;
+
+		this.autoreconnectTicks = 0;
+		this.autoreconnectTries = 0;
 		
 		this.toolWarningTextTicksLeft = 0;
 		this.toolDurability = 0;
@@ -61,16 +69,6 @@ public class FMCVars
 		this.deathY = y;
 		this.deathZ = z;
 		this.deathWorld = world;
-	}
-
-	public void setIsAfterDeath(boolean isAfterDeath)
-	{
-		this.isAfterDeath = isAfterDeath;
-	}
-
-	public boolean getIsAfterDeath()
-	{
-		return this.isAfterDeath;
 	}
   
 	public double getLastDeathX()
@@ -108,61 +106,5 @@ public class FMCVars
 		if(toolWarningTextTicksLeft > 0) {
 			toolWarningTextTicksLeft -= 1;
 		}
-	}
-
-	public int getToolDurability()
-	{
-		return toolDurability;
-	}
-
-	public void setToolDurability(int toolDurability)
-	{
-		this.toolDurability = toolDurability;
-	}
-
-	public Hand getToolHand()
-	{
-		return toolHand;
-	}
-
-	public void setToolHand(Hand toolHand)
-	{
-		this.toolHand = toolHand;
-	}
-
-	public ItemStack getMainHandToolItemStack()
-	{
-		return mainHandToolItemStack;
-	}
-
-	public void setMainHandToolItemStack(ItemStack mainHandToolItemStack)
-	{
-		this.mainHandToolItemStack = mainHandToolItemStack;
-	}
-
-	public ItemStack getOffHandToolItemStack()
-	{
-		return offHandToolItemStack;
-	}
-
-	public void setOffHandToolItemStack(ItemStack offHandToolItemStack)
-	{
-		this.offHandToolItemStack = offHandToolItemStack;
-	}
-
-	public boolean fullbright() {
-		return fullbright;
-	}
-
-	public void setFullbright(boolean fullbright) {
-		this.fullbright = fullbright;
-	}
-
-	public boolean entityOutline() {
-		return entityOutline;
-	}
-
-	public void setEntityOutline(boolean entityOutline) {
-		this.entityOutline = entityOutline;
 	}
 }
