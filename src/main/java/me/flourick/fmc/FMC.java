@@ -153,6 +153,18 @@ public class FMC implements ModInitializer
 				FMC.VARS.mainHandToolItemStack = mainHandItem;
 				FMC.VARS.offHandToolItemStack = offHandItem;
 			}
+
+			if(FMC.OPTIONS.autoeat) {
+				if(FMC.MC.player.getHungerManager().getFoodLevel() <= 18 && FMC.MC.player.getOffHandStack().isFood()) {
+					FMC.MC.options.keyUse.setPressed(true);
+					FMC.VARS.eating = true;
+				}
+				else if(FMC.VARS.eating == true) {
+					FMC.VARS.eating = false;
+
+					FMC.MC.options.keyUse.setPressed(false);
+				}
+			}
 		});
 	}
 }

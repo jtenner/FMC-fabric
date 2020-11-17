@@ -66,8 +66,18 @@ public class FMCOptions
 	public boolean autoreconnect;
 	public int autoreconnectMaxTries;
 	public int autoreconnectTimeout;
+	public boolean autoeat;
 
 	//region OPTIONS
+
+	public static final MyBooleanOption AUTOEAT = new MyBooleanOption("Offhand Autoeat",
+		(gameOptions) -> {
+			return FMC.OPTIONS.autoeat;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.autoeat = bool;
+		}
+	);
 
 	public static final DoubleOption AUTORECONNECT_TIMEOUT = new DoubleOption("nope", 3.0d, 300.0d, 1.0f,
 		(gameOptions) -> {
@@ -371,6 +381,7 @@ public class FMCOptions
 			printWriter.println("autoreconnect:" + this.autoreconnect);
 			printWriter.println("autoreconnectMaxTries:" + this.autoreconnectMaxTries);
 			printWriter.println("autoreconnectTimeout:" + this.autoreconnectTimeout);
+			printWriter.println("autoeat:" + this.autoeat);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -503,6 +514,9 @@ public class FMCOptions
 							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
 						}
 						break;
+					case "autoeat":
+						this.autoeat = "true".equalsIgnoreCase(value);
+						break;
 				}
 			});
 		}
@@ -533,5 +547,6 @@ public class FMCOptions
 		this.autoreconnect = false;
 		this.autoreconnectMaxTries = 5;
 		this.autoreconnectTimeout = 5;
+		this.autoeat = false;
 	}
 }

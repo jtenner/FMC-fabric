@@ -6,6 +6,8 @@ import net.minecraft.util.Hand;
 
 public class FMCVars
 {
+	public boolean eating;
+
 	public boolean freecam;
 
 	public double freecamYaw;
