@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.LiteralText;
@@ -177,13 +177,18 @@ public class FMC implements ModInitializer
 					FMC.MC.options.keyUse.setPressed(false);
 				}
 			}
+		});
 
+		ClientTickEvents.START_WORLD_TICK.register(client -> {
 			if(FMC.OPTIONS.triggerBot && FMC.MC.currentScreen == null) {
 				if(FMC.MC.crosshairTarget != null && FMC.MC.crosshairTarget.getType() == Type.ENTITY && FMC.MC.player.getAttackCooldownProgress(0.0f) >= 1.0f) {
-					Entity entity = ((EntityHitResult)FMC.MC.crosshairTarget).getEntity();
+					if(((EntityHitResult)FMC.MC.crosshairTarget).getEntity() instanceof LivingEntity) {
+						LivingEntity livingEntity = (LivingEntity)((EntityHitResult)FMC.MC.crosshairTarget).getEntity();
 
-					if(entity.isAlive() && entity.isAttackable()) {
-						FMC.MC.interactionManager.attackEntity(FMC.MC.player, entity);
+						if(livingEntity.isAttackable() && livingEntity.hurtTime == 0 && livingEntity.isAlive()) {
+							FMC.MC.interactionManager.attackEntity(FMC.MC.player, livingEntity);
+							FMC.MC.player.swingHand(Hand.MAIN_HAND);
+						}
 					}
 				}
 			}
