@@ -168,27 +168,22 @@ public class FMC implements ModInitializer
 			}
 
 			if(FMC.OPTIONS.autoEat) {
-				// Get the player's food level (useful if it's less than 20)
 				int foodLevel = FMC.MC.player.getHungerManager().getFoodLevel();
-				float healthLevel = FMC.MC.player.getHealth();
-				if(foodLevel < 20) {
-					// The offhand stack is what we are using, so let's inspect it
-					ItemStack offHandStack = FMC.MC.player.getOffHandStack();
-					if(offHandStack.isFood()) {
-						// the food component actually reports how much hunger it fills
-						FoodComponent offHandStackFoodComponent = offHandStack.getItem().getFoodComponent();
-						int foodComponentHunger = offHandStackFoodComponent.getHunger();
-            // if eating the food would result in 20 or less...
-						if(foodComponentHunger + foodLevel <= 20 || healthLevel <= 10.0f) {
-							// just eat it!
-							FMC.MC.options.keyUse.setPressed(true);
-							FMC.VARS.eating = true;
-						}
+
+				// checks if we hungry and have food in your offhand
+				if(foodLevel < 20 && FMC.MC.player.getOffHandStack().isFood()) {
+					// either we on low health so eat anyway or eat hunger is low enough for the food to be fully utilized
+					if(FMC.MC.player.getOffHandStack().getItem().getFoodComponent().getHunger() + foodLevel <= 20 || FMC.MC.player.getHealth() <= 12.0f) {
+						FMC.MC.options.keyUse.setPressed(true);
+						FMC.VARS.autoEating = true;
+					}
+					else if(FMC.VARS.autoEating == true) {
+						FMC.VARS.autoEating = false;
+						FMC.MC.options.keyUse.setPressed(false);
 					}
 				}
-				else if(FMC.VARS.eating == true) {
-					FMC.VARS.eating = false;
-
+				else if(FMC.VARS.autoEating == true) {
+					FMC.VARS.autoEating = false;
 					FMC.MC.options.keyUse.setPressed(false);
 				}
 			}
