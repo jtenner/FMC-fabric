@@ -167,13 +167,22 @@ public class FMC implements ModInitializer
 			}
 
 			if(FMC.OPTIONS.autoEat) {
-				if(FMC.MC.player.getHungerManager().getFoodLevel() <= 18 && FMC.MC.player.getOffHandStack().isFood()) {
-					FMC.MC.options.keyUse.setPressed(true);
-					FMC.VARS.eating = true;
-				}
-				else if(FMC.VARS.eating == true) {
-					FMC.VARS.eating = false;
+				int foodLevel = FMC.MC.player.getHungerManager().getFoodLevel();
 
+				// checks if we hungry and have food in your offhand
+				if(foodLevel < 20 && FMC.MC.player.getOffHandStack().isFood()) {
+					// either we on low health so eat anyway or eat hunger is low enough for the food to be fully utilized
+					if(FMC.MC.player.getOffHandStack().getItem().getFoodComponent().getHunger() + foodLevel <= 20 || FMC.MC.player.getHealth() <= 12.0f) {
+						FMC.MC.options.keyUse.setPressed(true);
+						FMC.VARS.autoEating = true;
+					}
+					else if(FMC.VARS.autoEating == true) {
+						FMC.VARS.autoEating = false;
+						FMC.MC.options.keyUse.setPressed(false);
+					}
+				}
+				else if(FMC.VARS.autoEating == true) {
+					FMC.VARS.autoEating = false;
 					FMC.MC.options.keyUse.setPressed(false);
 				}
 			}
