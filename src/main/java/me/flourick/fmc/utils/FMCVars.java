@@ -28,8 +28,8 @@ public class FMCVars
 	public float freecamSideSpeed;
 	public float freecamUpSpeed;
 
-	public int autoreconnectTries;
-	public int autoreconnectTicks;
+	public int autoReconnectTries;
+	public int autoReconnectTicks;
 	public ServerInfo lastJoinedServer;
 
 	public boolean fullbright;
@@ -55,8 +55,8 @@ public class FMCVars
 		this.deathWorld = "";
 		this.isAfterDeath = false;
 
-		this.autoreconnectTicks = 0;
-		this.autoreconnectTries = 0;
+		this.autoReconnectTicks = 0;
+		this.autoReconnectTries = 0;
 		
 		this.toolWarningTextTicksLeft = 0;
 		this.toolDurability = 0;

@@ -38,8 +38,8 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void onConstructor(MinecraftClient client, ClientWorld world, ClientPlayNetworkHandler networkHandler, StatHandler stats, ClientRecipeBook recipeBook, boolean lastSneaking, boolean lastSprinting, CallbackInfo info)
 	{
-		if(FMC.OPTIONS.autoreconnect) {
-			FMC.VARS.autoreconnectTries = 0;
+		if(FMC.OPTIONS.autoReconnect) {
+			FMC.VARS.autoReconnectTries = 0;
 		}
 	}
 

@@ -63,52 +63,62 @@ public class FMCOptions
 	public boolean noNetherFog;
 	public boolean noBlockBreakParticles;
 	public boolean refillHand;
-	public boolean autoreconnect;
-	public int autoreconnectMaxTries;
-	public int autoreconnectTimeout;
-	public boolean autoeat;
+	public boolean autoReconnect;
+	public int autoReconnectMaxTries;
+	public int autoReconnectTimeout;
+	public boolean autoEat;
+	public boolean triggerBot;
 
 	//region OPTIONS
 
-	public static final MyBooleanOption AUTOEAT = new MyBooleanOption("Offhand Autoeat",
+	public static final MyBooleanOption TRIGGER_BOT = new MyBooleanOption("Trigger Autoattack",
 		(gameOptions) -> {
-			return FMC.OPTIONS.autoeat;
+			return FMC.OPTIONS.triggerBot;
 		},
 		(gameOptions, bool) -> {
-			FMC.OPTIONS.autoeat = bool;
+			FMC.OPTIONS.triggerBot = bool;
+		}
+	);
+
+	public static final MyBooleanOption AUTOEAT = new MyBooleanOption("Offhand Autoeat",
+		(gameOptions) -> {
+			return FMC.OPTIONS.autoEat;
+		},
+		(gameOptions, bool) -> {
+			FMC.OPTIONS.autoEat = bool;
 		}
 	);
 
 	public static final DoubleOption AUTORECONNECT_TIMEOUT = new DoubleOption("nope", 3.0d, 300.0d, 1.0f,
 		(gameOptions) -> {
-			return (double)FMC.OPTIONS.autoreconnectTimeout;
+			return (double)FMC.OPTIONS.autoReconnectTimeout;
 		},
 		(gameOptions, timeout) -> {
-			FMC.OPTIONS.autoreconnectTimeout = MathHelper.ceil(timeout);
+			FMC.OPTIONS.autoReconnectTimeout = MathHelper.ceil(timeout);
 		},
 		(gameOptions, doubleOption) -> {
-			return new LiteralText("Timeout: " + BigDecimal.valueOf(FMC.OPTIONS.autoreconnectTimeout).setScale(0, RoundingMode.HALF_UP) + "s");
+			return new LiteralText("Timeout: " + BigDecimal.valueOf(FMC.OPTIONS.autoReconnectTimeout).setScale(0, RoundingMode.HALF_UP) + "s");
 		}
 	);
 
 	public static final DoubleOption AUTORECONNECT_MAX_TRIES = new DoubleOption("nope", 1.0d, 100.0d, 1.0f,
 		(gameOptions) -> {
-			return (double)FMC.OPTIONS.autoreconnectMaxTries;
+			return (double)FMC.OPTIONS.autoReconnectMaxTries;
 		},
 		(gameOptions, tries) -> {
-			FMC.OPTIONS.autoreconnectMaxTries = MathHelper.ceil(tries);
+			FMC.OPTIONS.autoReconnectMaxTries = MathHelper.ceil(tries);
 		},
 		(gameOptions, doubleOption) -> {
-			return new LiteralText("Max Tries: " + BigDecimal.valueOf(FMC.OPTIONS.autoreconnectMaxTries).setScale(0, RoundingMode.HALF_UP));
+			return new LiteralText("Max Tries: " + BigDecimal.valueOf(FMC.OPTIONS.autoReconnectMaxTries).setScale(0, RoundingMode.HALF_UP));
 		}
 	);
 
 	public static final MyBooleanOption AUTORECONNECT = new MyBooleanOption("Autoreconnect",
 		(gameOptions) -> {
-			return FMC.OPTIONS.autoreconnect;
+			return FMC.OPTIONS.autoReconnect;
 		},
 		(gameOptions, bool) -> {
-			FMC.OPTIONS.autoreconnect = bool;
+			FMC.OPTIONS.autoReconnect = bool;
 		}
 	);
 
@@ -378,10 +388,11 @@ public class FMCOptions
 			printWriter.println("noNetherFog:" + this.noNetherFog);
 			printWriter.println("noBlockBreakParticles:" + this.noBlockBreakParticles);
 			printWriter.println("refillHand:" + this.refillHand);
-			printWriter.println("autoreconnect:" + this.autoreconnect);
-			printWriter.println("autoreconnectMaxTries:" + this.autoreconnectMaxTries);
-			printWriter.println("autoreconnectTimeout:" + this.autoreconnectTimeout);
-			printWriter.println("autoeat:" + this.autoeat);
+			printWriter.println("autoReconnect:" + this.autoReconnect);
+			printWriter.println("autoReconnectMaxTries:" + this.autoReconnectMaxTries);
+			printWriter.println("autoReconnectTimeout:" + this.autoReconnectTimeout);
+			printWriter.println("autoEat:" + this.autoEat);
+			printWriter.println("triggerBot:" + this.triggerBot);
 		}
 		catch(FileNotFoundException e) {
 			LogManager.getLogger().error("Failed to load FMCOptions", e);
@@ -495,27 +506,30 @@ public class FMCOptions
 					case "refillHand":
 						this.refillHand = "true".equalsIgnoreCase(value);
 						break;
-					case "autoreconnect":
-						this.autoreconnect = "true".equalsIgnoreCase(value);
+					case "autoReconnect":
+						this.autoReconnect = "true".equalsIgnoreCase(value);
 						break;
-					case "autoreconnectMaxTries":
+					case "autoReconnectMaxTries":
 						try {
-							this.autoreconnectMaxTries = MathHelper.clamp(Integer.parseInt(value), 1, 100);
+							this.autoReconnectMaxTries = MathHelper.clamp(Integer.parseInt(value), 1, 100);
 						}
 						catch(NumberFormatException e) {
 							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
 						}
 						break;
-					case "autoreconnectTimeout":
+					case "autoReconnectTimeout":
 						try {
-							this.autoreconnectTimeout = MathHelper.clamp(Integer.parseInt(value), 3, 300);
+							this.autoReconnectTimeout = MathHelper.clamp(Integer.parseInt(value), 3, 300);
 						}
 						catch(NumberFormatException e) {
 							LogManager.getLogger().warn("Skipping bad option (" + value + ")" + " for " + key);
 						}
 						break;
-					case "autoeat":
-						this.autoeat = "true".equalsIgnoreCase(value);
+					case "autoEat":
+						this.autoEat = "true".equalsIgnoreCase(value);
+						break;
+					case "triggerBot":
+						this.triggerBot = "true".equalsIgnoreCase(value);
 						break;
 				}
 			});
@@ -544,9 +558,10 @@ public class FMCOptions
 		this.noNetherFog = false;
 		this.noBlockBreakParticles = false;
 		this.refillHand = false;
-		this.autoreconnect = false;
-		this.autoreconnectMaxTries = 5;
-		this.autoreconnectTimeout = 5;
-		this.autoeat = false;
+		this.autoReconnect = false;
+		this.autoReconnectMaxTries = 5;
+		this.autoReconnectTimeout = 5;
+		this.autoEat = false;
+		this.triggerBot = false;
 	}
 }

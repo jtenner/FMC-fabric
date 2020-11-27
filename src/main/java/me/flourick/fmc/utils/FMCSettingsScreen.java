@@ -33,18 +33,19 @@ public class FMCSettingsScreen extends GameOptionsScreen
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_GREEN_COMPONENT);
 		this.list.addSingleOptionEntry(FMCOptions.CROSSHAIR_BLUE_COMPONENT);
 		this.list.addSingleOptionEntry(new SpacerOption("HUD")); 
-		this.list.addAll(new Option[] {FMCOptions.HUD_VERTICAL_COORDINATES, FMCOptions.SHOW_HUD_INFO});
+		this.list.addAll(new Option[] {FMCOptions.SHOW_HUD_INFO, FMCOptions.HUD_VERTICAL_COORDINATES});
 		this.list.addSingleOptionEntry(new SpacerOption("Tools"));
 		this.list.addAll(new Option[] {FMCOptions.NO_TOOL_BREAKING, FMCOptions.TOOL_WARNING});
 		this.list.addAll(new Option[] {FMCOptions.UPPER_TOOL_BREAKING_WARNING, FMCOptions.TOOL_BREAKING_WARNING_SCALE});
 		this.list.addSingleOptionEntry(new SpacerOption("Render"));
 		this.list.addAll(new Option[] {FMCOptions.NO_NETHER_FOG, FMCOptions.NO_BLOCK_BREAK_PARTICLES});
 		this.list.addSingleOptionEntry(FMCOptions.CLOUD_HEIGHT);
-		this.list.addSingleOptionEntry(new SpacerOption("Autoreconnect"));
+		this.list.addSingleOptionEntry(new SpacerOption("Auto"));
 		this.list.addAll(new Option[] {FMCOptions.AUTORECONNECT, FMCOptions.AUTORECONNECT_MAX_TRIES});
 		this.list.addSingleOptionEntry(FMCOptions.AUTORECONNECT_TIMEOUT);
+		this.list.addAll(new Option[] {FMCOptions.AUTOEAT, FMCOptions.TRIGGER_BOT});
 		this.list.addSingleOptionEntry(new SpacerOption("Other"));
-		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SEND_DEATH_COORDINATES, FMCOptions.RANDOM_PLACEMENT, FMCOptions.REFILL_HAND, FMCOptions.AUTOEAT});
+		this.list.addAll(new Option[] {FMCOptions.DISABLE_W_TO_SPRINT, FMCOptions.SEND_DEATH_COORDINATES, FMCOptions.RANDOM_PLACEMENT, FMCOptions.REFILL_HAND});
 		this.children.add(this.list);
 		this.addButton(new ButtonWidget(this.width / 2 - 100, this.height - 27, 200, 20, ScreenTexts.DONE, (buttonWidget) -> {
 			FMC.OPTIONS.write();

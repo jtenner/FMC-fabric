@@ -62,6 +62,14 @@ Disables the particles that spawn when you break a block.
 
 Once the stack in your main hand is below 50% automatically finds the same item in your inventory and restocks it.
 
+### Auto Reconnect
+
+Will try to automatically reconnect you to the server you got disconnected from. Number of tries and the time after which it tries to reconnect you are configurable.
+
+### Offhand Autoeat
+
+Once you lose two hunger will automatically eat from your offhand, won't work if you for example aim at a chest.
+
 ### Random Block Placement (keybindable)
 
 Randomly selects a block from your hotbar to place every time you try to place a block or when you have an empty hand.
@@ -78,7 +86,11 @@ Makes all entities (except players) glow white and be seen through walls. Useful
 
 Allows you to leave your body and explore your surroundings. Works similar to spectator.
 
-## Preview (v1.4.1)
+### Trigger Autoattack (keybindable)
+
+Automatically attacks entities if you place your crosshair over them and in reach. Primarily meant for AFK farms.
+
+## Preview (v1.4.2)
 
 Static crosshair color, HUD info, death message & tool breaking warning.
 
@@ -86,7 +98,7 @@ Static crosshair color, HUD info, death message & tool breaking warning.
 
 Ingame menu (default settings)
 
-![menu](https://user-images.githubusercontent.com/33128006/98689627-669df480-236c-11eb-8659-17048266464a.png)
+![menu](https://user-images.githubusercontent.com/33128006/100463928-ed710200-30cc-11eb-8581-d863d62a94f5.png)
 
 ----
 

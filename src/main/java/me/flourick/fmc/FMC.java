@@ -17,10 +17,13 @@ import net.minecraft.client.gui.screen.DisconnectedScreen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult.Type;
 import net.minecraft.util.math.MathHelper;
 
 public class FMC implements ModInitializer
@@ -55,15 +58,24 @@ public class FMC implements ModInitializer
 		KeyBinding freecamKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Freecam", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
 		KeyBinding randomPlacementKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Random Placement", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
 		KeyBinding entityOutlineKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Entity Outline", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
+		KeyBinding autoAttackKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Auto Attack", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, "FMC"));
 		toolBreakingOverrideKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding("Tool Breaking Override", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_ALT, "FMC"));
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			if(FMC.MC.player == null && FMC.VARS.freecam) {
+				FMC.VARS.freecam = false;
+			}
+
 			while(fullbrightKeybind.wasPressed()) {
 				FMC.VARS.fullbright = !FMC.VARS.fullbright;
 			}
 
 			while(entityOutlineKeybind.wasPressed()) {
 				FMC.VARS.entityOutline = !FMC.VARS.entityOutline;
+			}
+
+			while(autoAttackKeybind.wasPressed()) {
+				FMC.OPTIONS.triggerBot = !FMC.OPTIONS.triggerBot;
 			}
 
 			while(freecamKeybind.wasPressed()) {
@@ -101,25 +113,25 @@ public class FMC implements ModInitializer
 				}
 			}
 
-			if(FMC.VARS.autoreconnectTicks > 0 && FMC.OPTIONS.autoreconnect) {
+			if(FMC.VARS.autoReconnectTicks > 0 && FMC.OPTIONS.autoReconnect) {
 				if(FMC.MC.currentScreen instanceof DisconnectedScreen) {
-					FMC.VARS.autoreconnectTicks -= 1;
+					FMC.VARS.autoReconnectTicks -= 1;
 
-					if(FMC.VARS.autoreconnectTicks == 0 && FMC.VARS.lastJoinedServer != null) {
-						if(FMC.VARS.autoreconnectTries < FMC.OPTIONS.autoreconnectMaxTries + 1) {
+					if(FMC.VARS.autoReconnectTicks == 0 && FMC.VARS.lastJoinedServer != null) {
+						if(FMC.VARS.autoReconnectTries < FMC.OPTIONS.autoReconnectMaxTries + 1) {
 							FMC.MC.disconnect();
 							FMC.MC.openScreen(new ConnectScreen(new TitleScreen(), FMC.MC, FMC.VARS.lastJoinedServer));
 						}
 						else {
 							// we get here when all tries are due
-							FMC.VARS.autoreconnectTries = 0;
+							FMC.VARS.autoReconnectTries = 0;
 						}
 					}
 				}
 				else {
 					// we get here when player decides to go back to multiplayer screen before all tries are due
-					FMC.VARS.autoreconnectTicks = 0;
-					FMC.VARS.autoreconnectTries = 0;
+					FMC.VARS.autoReconnectTicks = 0;
+					FMC.VARS.autoReconnectTries = 0;
 				}
 			}
 		});
@@ -154,7 +166,7 @@ public class FMC implements ModInitializer
 				FMC.VARS.offHandToolItemStack = offHandItem;
 			}
 
-			if(FMC.OPTIONS.autoeat) {
+			if(FMC.OPTIONS.autoEat) {
 				if(FMC.MC.player.getHungerManager().getFoodLevel() <= 18 && FMC.MC.player.getOffHandStack().isFood()) {
 					FMC.MC.options.keyUse.setPressed(true);
 					FMC.VARS.eating = true;
@@ -163,6 +175,16 @@ public class FMC implements ModInitializer
 					FMC.VARS.eating = false;
 
 					FMC.MC.options.keyUse.setPressed(false);
+				}
+			}
+
+			if(FMC.OPTIONS.triggerBot && FMC.MC.currentScreen == null) {
+				if(FMC.MC.crosshairTarget != null && FMC.MC.crosshairTarget.getType() == Type.ENTITY && FMC.MC.player.getAttackCooldownProgress(0.0f) >= 1.0f) {
+					Entity entity = ((EntityHitResult)FMC.MC.crosshairTarget).getEntity();
+
+					if(entity.isAlive() && entity.isAttackable()) {
+						FMC.MC.interactionManager.attackEntity(FMC.MC.player, entity);
+					}
 				}
 			}
 		});
