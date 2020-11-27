@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.MessageType;
 import net.minecraft.text.LiteralText;
@@ -167,9 +168,22 @@ public class FMC implements ModInitializer
 			}
 
 			if(FMC.OPTIONS.autoEat) {
-				if(FMC.MC.player.getHungerManager().getFoodLevel() <= 18 && FMC.MC.player.getOffHandStack().isFood()) {
-					FMC.MC.options.keyUse.setPressed(true);
-					FMC.VARS.eating = true;
+				// Get the player's food level (useful if it's less than 20)
+				int foodLevel = FMC.MC.player.getHungerManager().getFoodLevel();
+				if(foodLevel < 20) {
+					// The offhand stack is what we are using, so let's inspect it
+					ItemStack offHandStack = FMC.MC.player.getOffHandStack();
+					if(offHandStack.isFood()) {
+						// the food component actually reports how much hunger it fills
+						FoodComponent offHandStackFoodComponent = offHandStack.getItem().getFoodComponent();
+						int foodComponentHunger = offHandStackFoodComponent.getHunger();
+            // if eating the food would result in 20 or less...
+						if (foodComponentHunger + foodLevel <= 20) {
+							// just eat it!
+							FMC.MC.options.keyUse.setPressed(true);
+							FMC.VARS.eating = true;
+						}
+					}
 				}
 				else if(FMC.VARS.eating == true) {
 					FMC.VARS.eating = false;
