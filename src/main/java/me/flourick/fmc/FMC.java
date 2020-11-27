@@ -170,6 +170,7 @@ public class FMC implements ModInitializer
 			if(FMC.OPTIONS.autoEat) {
 				// Get the player's food level (useful if it's less than 20)
 				int foodLevel = FMC.MC.player.getHungerManager().getFoodLevel();
+				float healthLevel = FMC.MC.player.getHealth();
 				if(foodLevel < 20) {
 					// The offhand stack is what we are using, so let's inspect it
 					ItemStack offHandStack = FMC.MC.player.getOffHandStack();
@@ -178,7 +179,7 @@ public class FMC implements ModInitializer
 						FoodComponent offHandStackFoodComponent = offHandStack.getItem().getFoodComponent();
 						int foodComponentHunger = offHandStackFoodComponent.getHunger();
             // if eating the food would result in 20 or less...
-						if (foodComponentHunger + foodLevel <= 20) {
+						if(foodComponentHunger + foodLevel <= 20 || healthLevel <= 10.0f) {
 							// just eat it!
 							FMC.MC.options.keyUse.setPressed(true);
 							FMC.VARS.eating = true;
